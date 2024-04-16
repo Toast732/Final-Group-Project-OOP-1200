@@ -1,7 +1,10 @@
+package javaProject.methods;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javaProject.methods.Login;
 
 
 
@@ -30,7 +33,7 @@ public class bankingGUI extends JFrame {
         passwordField = new JPasswordField();
         add(passwordField);
 
-        loginButton = new JButton("Login");
+        loginButton = new JButton("javaProject.methods.Login");
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -48,12 +51,12 @@ public class bankingGUI extends JFrame {
     private void performLogin() {
         String username = usernameField.getText();
         String password = new String(passwordField.getPassword());
-        LoginManager loginManager = new LoginManager();
-        if (loginManager.authenticate(username, password)) {
-            loginStatusLabel.setText("Login Successful!");
+        Login login = new Login();
+        if (login.authorizePass(username, password)) {
+            loginStatusLabel.setText("javaProject.methods.Login Successful!");
 
         } else {
-            loginStatusLabel.setText("Login Failed!");
+            loginStatusLabel.setText("javaProject.methods.Login Failed!");
         }
     }
 
