@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 
 
+
 public class bankingGUI extends JFrame {
     private JTextField usernameField;
     private JPasswordField passwordField;
@@ -40,7 +41,7 @@ public class bankingGUI extends JFrame {
 
         loginStatusLabel = new JLabel();
         add(loginStatusLabel);
-        
+
         setVisible(true);
     }
 
@@ -48,6 +49,15 @@ public class bankingGUI extends JFrame {
         String username = usernameField.getText();
         String password = new String(passwordField.getPassword());
         LoginManager loginManager = new LoginManager();
+        if (loginManager.authenticate(username, password)) {
+            loginStatusLabel.setText("Login Successful!");
 
+        } else {
+            loginStatusLabel.setText("Login Failed!");
+        }
+    }
+
+    public static  void main(String[] args) {
+        new bankingGUI();
     }
 }
