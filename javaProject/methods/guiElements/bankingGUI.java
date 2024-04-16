@@ -1,19 +1,18 @@
-package javaProject.methods;
+package javaProject.methods.guiElements;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javaProject.methods.Login;
-
-
-
+import javaProject.methods.guiElements.*;
 
 public class bankingGUI extends JFrame {
     private JTextField usernameField;
     private JPasswordField passwordField;
     private JButton loginButton;
     private JLabel loginStatusLabel;
+    private JButton showRegistrationButton;
 
     public bankingGUI() {
         createUI();
@@ -21,7 +20,7 @@ public class bankingGUI extends JFrame {
 
     private void createUI() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(600, 400);
+        setSize(400, 300);
         setLocationRelativeTo(null);
         setLayout(new GridLayout(3, 2));
 
@@ -33,17 +32,19 @@ public class bankingGUI extends JFrame {
         passwordField = new JPasswordField();
         add(passwordField);
 
-        loginButton = new JButton("javaProject.methods.Login");
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                performLogin();
-            }
-        });
+        loginButton = new JButton("Login");
+        loginButton.addActionListener(e -> performLogin());
         add(loginButton);
 
         loginStatusLabel = new JLabel();
         add(loginStatusLabel);
+
+        showRegistrationButton = new JButton("Register New User");
+        showRegistrationButton.addActionListener(e -> {
+            Login login = new Login();
+            new registerGUI(login);
+        });
+        add(showRegistrationButton);
 
         setVisible(true);
     }
@@ -53,14 +54,15 @@ public class bankingGUI extends JFrame {
         String password = new String(passwordField.getPassword());
         Login login = new Login();
         if (login.authorizePass(username, password)) {
-            loginStatusLabel.setText("javaProject.methods.Login Successful!");
-
+            loginStatusLabel.setText("Login Successful!");
+            dispose(); // Close the login window
+            new UserProfileGUI(login.getUser(username)); // Pass the User object to the profile GUI
         } else {
-            loginStatusLabel.setText("javaProject.methods.Login Failed!");
+            loginStatusLabel.setText("Login Failed!");
         }
     }
-
-    public static  void main(String[] args) {
-        new bankingGUI();
-    }
+   /* comment line -  remove slash and asterix to test
+    public static void main(String[] args) {
+        new bankingGUI(); // Main method to launch GUI if needed in this class
+ */
 }
