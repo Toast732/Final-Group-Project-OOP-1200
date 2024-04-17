@@ -5,12 +5,15 @@ import javax.swing.*;
 import javaProject.methods.Login;
 
 import javaProject.customLayouts.GridBagVerticalList;
+import javaProject.pageSegments.KnownUserSegment;
 
 import java.awt.*;
 
+import javaProject.window.Window;
+
 public class LoginPage extends NormalPage {
 
-    public LoginPage() {
+    public LoginPage(Window window) {
         // Create the page for this, and call it "Login"
         super("Login");
 
@@ -26,8 +29,6 @@ public class LoginPage extends NormalPage {
 
         // Create the Username field.
         JTextField userNameField = new JTextField(32);
-
-
 
         // Create the username JPanel.
         JPanel usernamePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -57,5 +58,19 @@ public class LoginPage extends NormalPage {
         //verticalList.add(passwordField);
         verticalList.add(inputGridPanel);
         verticalList.add(loginButton);
+
+        loginButton.addActionListener(e -> {
+            // Get the username and password.
+            String username = userNameField.getText();
+            String password = new String(passwordField.getPassword());
+
+            // Attempt to login.
+            Login login = new Login();
+            boolean success = login.authorizePass(username, password);
+
+            if(success){
+                window.setSegment(new KnownUserSegment());
+            }
+        });
     }
 }

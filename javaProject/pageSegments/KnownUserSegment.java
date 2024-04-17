@@ -2,6 +2,7 @@ package javaProject.pageSegments;
 
 
 import javaProject.pages.LoginPage;
+import javaProject.pages.LogoutPage;
 
 public class KnownUserSegment extends PageSegment {
     public KnownUserSegment(){
@@ -9,6 +10,6 @@ public class KnownUserSegment extends PageSegment {
         super();
 
         // Add the login page to the segment.
-        super.addPage(new LoginPage());
+        super.addPage(new LogoutPage());
     }
 }

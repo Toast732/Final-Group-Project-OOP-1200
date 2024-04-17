@@ -15,7 +15,7 @@ public class Main {
         Window window = new Window(bankName);
 
         // Create the GuestUserSegment.
-        PageSegment guestUserSegment = new GuestUserSegment();
+        PageSegment guestUserSegment = new GuestUserSegment(window);
 
         window.setSegment(guestUserSegment);
 
