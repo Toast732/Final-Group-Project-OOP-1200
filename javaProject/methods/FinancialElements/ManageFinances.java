@@ -1,4 +1,7 @@
-package javaProject.methods;
+package javaProject.methods.FinancialElements;
+import javaProject.methods.FinancialElements.Deposit;
+import javaProject.methods.FinancialElements.Withdraw;
+
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;

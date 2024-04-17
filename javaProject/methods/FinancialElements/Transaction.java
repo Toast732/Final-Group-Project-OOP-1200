@@ -1,4 +1,4 @@
-package javaProject.methods;
+package javaProject.methods.FinancialElements;
 
 import java.util.ArrayList;
 

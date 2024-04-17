@@ -1,4 +1,4 @@
-package javaProject.methods;
+package javaProject.methods.FinancialElements;
 
 public class Deposit {
     private int accountTotal;
