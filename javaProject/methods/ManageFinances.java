@@ -16,27 +16,27 @@ public class ManageFinances {
             String input = myObj.nextLine();
 
             // Checks if user input is income
-            if (Objects.equals(input, "i")) {
+            if (Objects.equals(input, "d")) {
                 // creates a new instance of income
-                Income Value = new Income();
-                System.out.println("Enter income amount");
-                String incomeString = myObj.nextLine();
-                int incomeAmount = Integer.parseInt(incomeString);
+                Deposit Value = new Deposit();
+                System.out.println("Enter deposit amount");
+                String depositString = myObj.nextLine();
+                int depositAmount = Integer.parseInt(depositString);
                 //adds the current variable to the transaction list
-                transactionList.add(Value.generateIncome(incomeAmount, accountBalance));
+                transactionList.add(Value.generateDeposit(depositAmount, accountBalance));
                 //adds the new income to account balance
-                accountBalance += Value.updateAccountTotal(incomeAmount, accountBalance);
+                accountBalance += Value.updateAccountTotal(depositAmount, accountBalance);
             }
             //checks if user input is equal to expense
-            else if (Objects.equals(input, "e")) {
-                Expense Value = new Expense();
-                System.out.println("Enter expense amount");
-                String expenseString = myObj.nextLine();
-                int expenseAmount = Integer.parseInt(expenseString);
+            else if (Objects.equals(input, "w")) {
+                Withdraw Value = new Withdraw();
+                System.out.println("Enter withdraw amount");
+                String withdrawString = myObj.nextLine();
+                int withdrawAmount = Integer.parseInt(withdrawString);
                 //adds the current variable to the transaction list
-                transactionList.add(Value.generateExpense(expenseAmount, accountBalance));
+                transactionList.add(Value.generateWithdraw(withdrawAmount, accountBalance));
                 //subtracts the expense from account balance
-                accountBalance += Value.updateAccountTotal(expenseAmount, accountBalance);
+                accountBalance += Value.updateAccountTotal(withdrawAmount, accountBalance);
             }
             //exits program if neither condition is true
             else{
