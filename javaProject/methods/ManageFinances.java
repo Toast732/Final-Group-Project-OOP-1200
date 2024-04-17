@@ -9,7 +9,7 @@ public class ManageFinances {
     private static ArrayList<Integer> transactionList = new ArrayList<Integer>();
     static boolean running = true;
 
-    public static void main(String[] args) {
+    public void editFinances() {
         while (running) {
             Scanner myObj = new Scanner(System.in);  // Create a Scanner object
             System.out.println("Enter income or expense");
