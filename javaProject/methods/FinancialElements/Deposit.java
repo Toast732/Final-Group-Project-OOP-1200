@@ -5,8 +5,8 @@ public class Deposit {
     private int incomeAmount;
 
     public int generateDeposit(int depositAmount, int accountTotal){
-        Transaction income= new Transaction();
-        this.incomeAmount = income.transactionEarn(depositAmount, accountTotal);
+        Transaction deposit= new Transaction();
+        this.incomeAmount = deposit.transactionEarn(depositAmount, accountTotal);
         return(this.incomeAmount);
     }
 

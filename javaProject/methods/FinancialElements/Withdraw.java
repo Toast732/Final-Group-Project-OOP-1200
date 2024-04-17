@@ -5,8 +5,8 @@ public class Withdraw {
     private int expenseAmount;
 
     public int generateWithdraw(int depositAmount, int accountTotal){
-        Transaction income= new Transaction();
-        this.expenseAmount = income.transactionBuy(depositAmount, accountTotal);
+        Transaction withdraw= new Transaction();
+        this.expenseAmount = withdraw.transactionBuy(depositAmount, accountTotal);
         return(this.expenseAmount);
     }
 
