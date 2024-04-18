@@ -1,5 +1,7 @@
 package javaProject.pages;
 
+import javaProject.transactions.OneTimeTransaction;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -33,5 +35,14 @@ public class AddTransactionPage extends NormalPage {
         inputGridPanel.add(ConfirmLabel);
         inputGridPanel.add(ConfirmButton);
         this.jPanel.add(inputGridPanel);
+
+        ConfirmButton.addActionListener(e -> {
+            int amount = Integer.parseInt(AmountField.getText());
+            String title = TransactionNameField.getText();
+
+            OneTimeTransaction transaction = new OneTimeTransaction();
+
+            transaction.getAmount(amount);
+        });
     }
 }
