@@ -7,12 +7,12 @@ public class Deposit {
     public float generateDeposit(float depositAmount, float accountTotal){
         Transaction deposit= new Transaction();
         this.incomeAmount = deposit.transactionEarn(depositAmount, accountTotal);
+        updateAccountTotal(depositAmount, accountTotal);
         return(this.incomeAmount);
     }
 
-    public float updateAccountTotal(float depositAmount, float accountTotal){
+    public void updateAccountTotal(float depositAmount, float accountTotal){
         Transaction income= new Transaction();
         this.accountTotal += income.transactionEarn(depositAmount, accountTotal);
-        return(this.accountTotal);
     }
 }

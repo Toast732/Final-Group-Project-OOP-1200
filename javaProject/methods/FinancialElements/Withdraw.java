@@ -18,9 +18,8 @@ public class Withdraw extends ManageFinances{
         }
     }
 
-    public float updateAccountTotal(float withdrawAmount, float accountTotal){
+    public void updateAccountTotal(float withdrawAmount, float accountTotal){
         Transaction income= new Transaction();
         this.accountTotal += income.transactionBuy(withdrawAmount, accountTotal);
-        return(this.accountTotal);
     }
 }

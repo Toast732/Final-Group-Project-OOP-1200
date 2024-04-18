@@ -30,7 +30,7 @@ public class ManageFinances {
                 //adds the current variable to the transaction list
                 transactionList.add(Value.generateDeposit(depositAmount, accountBalance));
                 //adds the new income to account balance
-                accountBalance += Value.updateAccountTotal(depositAmount, accountBalance);
+                //accountBalance += Value.updateAccountTotal(depositAmount, accountBalance);
             }
             //checks if user input is equal to withdraw
             else if (Objects.equals(input, "w")) {
