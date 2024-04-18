@@ -3,6 +3,7 @@ package javaProject.pages;
 import javaProject.pageSegments.PageSegment;
 
 import javax.swing.*;
+import java.awt.*;
 
 public abstract class NormalPage implements Page {
 
@@ -10,14 +11,18 @@ public abstract class NormalPage implements Page {
     private final String name;
     private PageSegment segment;
 
-    public NormalPage(String name){
+    public NormalPage(String name, LayoutManager layoutManager){
+        // Set the name of the page.
         this.name = name;
 
-        // Create the panel for this page.
-        this.jPanel = new JPanel();
+        // Create the JPanel.
+        this.jPanel = new JPanel(layoutManager);
+    }
 
-        // Create a text field for this page.
-        //this.jPanel.add(new JTextField("TextField", 20));
+    // Overloaded constructor for when theres no LayoutManager given, defaults to GridBagLayout.
+    public NormalPage(String name){
+        // Call this constructor with the name and with the GridBagLayout.
+        this(name, new GridBagLayout());
     }
 
     public void assignSegment(PageSegment segment){

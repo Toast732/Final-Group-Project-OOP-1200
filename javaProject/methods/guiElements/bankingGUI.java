@@ -61,8 +61,8 @@ public class bankingGUI extends JFrame {
             loginStatusLabel.setText("Login Failed!");
         }
     }
-   /* comment line -  remove slash and asterix to test
-    public static void main(String[] args) {
-        new bankingGUI(); // Main method to launch GUI if needed in this class
- */
+
+    /*public static void main(String[] args) {
+        new bankingGUI(); // Main method to launch GUI if needed in this class */
+
 }

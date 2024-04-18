@@ -5,7 +5,7 @@ import javaProject.pages.LoginPage;
 import javaProject.pages.RegisterPage;
 
 public class GuestUserSegment extends PageSegment {
-    public GuestUserSegment(){
+    public GuestUserSegment() {
         // Call the super class's constructor.
         super();
 
