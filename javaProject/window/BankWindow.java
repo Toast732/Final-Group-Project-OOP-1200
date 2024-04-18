@@ -1,12 +1,13 @@
 package javaProject.window;
 
+import javaProject.debug.DebugPrint;
 import javaProject.pageSegments.PageSegment;
 
 import javax.swing.*;
 import java.awt.*;
 
 
-public class Window extends JFrame {
+public class BankWindow {
 
     public final String title;
 
@@ -14,7 +15,7 @@ public class Window extends JFrame {
 
     protected PageSegment currentSegment;
 
-    public Window(String title){
+    public BankWindow(String title) {
 
         // Set the title.
         this.title = title;
@@ -22,7 +23,7 @@ public class Window extends JFrame {
         // Create the JFrame
         this.jFrame = new JFrame(this.title);
 
-        this.jFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //this.jFrame.setPreferredSize(new java.awt.Dimension(500, 500));
         //this.jFrame.setSize(500, 500);
         //this.display();
@@ -48,6 +49,9 @@ public class Window extends JFrame {
 
     // Updates the window.
     public void update(){
+
+        DebugPrint.info("Updating window: " + this.title);
+
         // Invalidate the old window data.
         jFrame.invalidate();
 
@@ -61,6 +65,21 @@ public class Window extends JFrame {
     public void display() {
         this.jFrame.pack();
         this.jFrame.setVisible(true);
-        this.jFrame.setExtendedState(this.getExtendedState() | MAXIMIZED_BOTH);
+        this.jFrame.setExtendedState(this.jFrame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+    }
+
+    // Function to play an error sound, uses the system's error sound (Windows specific).
+    // Adapted from https://stackoverflow.com/a/18103204
+    public void soundError() {
+        // Get the default toolkit. (Specific OS Properties)
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+
+        // Get the error sound, cast to a Runnable.
+        Runnable errorSound = (Runnable) toolkit.getDesktopProperty("win.sound.exclamation");
+
+        // Play the sound (if it's not null).
+        if (errorSound != null) {
+            errorSound.run();
+        }
     }
 }

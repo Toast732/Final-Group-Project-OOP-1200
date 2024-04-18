@@ -1,25 +1,22 @@
 package javaProject.pages;
 
-import javax.swing.*;
-
-import javaProject.methods.Login;
-
+import javaProject.accounts.users.UserHandler;
 import javaProject.customLayouts.GridBagVerticalList;
+import javaProject.methods.Login;
 import javaProject.pageSegments.KnownUserSegment;
+import javaProject.window.BankWindow;
+import javaProject.window.WindowHandler;
 
+import javax.swing.*;
 import java.awt.*;
-
-import javaProject.window.Window;
 
 public class LoginPage extends NormalPage {
 
-    public LoginPage(Window window) {
+    public LoginPage() {
         // Create the page for this, and call it "Login"
         super("Login");
 
         // Create a 2x2 grid panel for the username and password.
-
-        // Create a new panel with the grid layout.
         JPanel inputGridPanel = new JPanel(new GridLayout(2, 2));
 
         this.jPanel.add(inputGridPanel);
@@ -30,10 +27,14 @@ public class LoginPage extends NormalPage {
         // Create the Username field.
         JTextField userNameField = new JTextField(32);
 
+        // Create the Username label.
+        JLabel usernameLabel = new JLabel("Username:");
+
         // Create the username JPanel.
         JPanel usernamePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+
         // Add the label to the layout.
-        usernamePanel.add(new JLabel("Username:"));
+        usernamePanel.add(usernameLabel);
 
         // Create the Password field.
         JPasswordField passwordField = new JPasswordField(32);
@@ -52,10 +53,6 @@ public class LoginPage extends NormalPage {
         JButton loginButton = new JButton("Login");
 
         // Add the fields to the panel.
-        //verticalList.add(usernameLabel, 0);
-        //verticalList.add(userNameField);
-        //verticalList.add(passwordLabel, 1);
-        //verticalList.add(passwordField);
         verticalList.add(inputGridPanel);
         verticalList.add(loginButton);
 
@@ -64,12 +61,26 @@ public class LoginPage extends NormalPage {
             String username = userNameField.getText();
             String password = new String(passwordField.getPassword());
 
-            // Attempt to login.
+            // Attempt to log in.
             Login login = new Login();
+
             boolean success = login.authorizePass(username, password);
 
+            // Get the window.
+            BankWindow window = WindowHandler.getInstance().getWindow(0);
+
+            // Get the user handler.
+            UserHandler userHandler = UserHandler.getInstance();
+
             if(success){
+                // As well, set the current user in the UserHandler.
+                UserHandler.getInstance().setCurrentUser(login.getUser(username));
+
+                // Set the segment to the KnownUserSegment.
                 window.setSegment(new KnownUserSegment());
+                // If we failed logging in.
+            } else {
+                window.soundError();
             }
         });
     }
