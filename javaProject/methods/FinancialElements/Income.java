@@ -5,7 +5,7 @@ public class Income {
     float incomeFrequency;
     String incomeTitle;
 
-    public Object ExpenseSource(String title, int amount, int payments, int time){
+    public Object IncomeSource(String title, int amount, int payments, int time){
         this.incomeTitle = title;
         this.incomeAmount = amount;
         GetFrequency(payments, time);
