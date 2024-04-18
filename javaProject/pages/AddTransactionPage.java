@@ -42,7 +42,8 @@ public class AddTransactionPage extends NormalPage {
 
             OneTimeTransaction transaction = new OneTimeTransaction();
 
-            transaction.getAmount(amount);
+            transaction.setAmount((double) amount);
+            transaction.setTitle(title);
         });
     }
 }
