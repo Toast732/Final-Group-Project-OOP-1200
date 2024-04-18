@@ -4,6 +4,7 @@ package javaProject.pageSegments;
 import javaProject.accounts.users.UserHandler;
 import javaProject.methods.User;
 import javaProject.pages.AddRegularTransactionPage;
+import javaProject.pages.AddTransactionPage;
 import javaProject.pages.buttons.LogoutButton;
 
 import javax.swing.*;
@@ -28,5 +29,6 @@ public class KnownUserSegment extends PageSegment {
 
         // Add the regularTransactionPage.
         super.addPage(new AddRegularTransactionPage());
+        super.addPage(new AddTransactionPage());
     }
 }
