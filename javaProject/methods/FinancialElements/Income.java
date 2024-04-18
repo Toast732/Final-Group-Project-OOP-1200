@@ -1,11 +1,11 @@
 package javaProject.methods.FinancialElements;
 
 public class Income {
-    int incomeAmount;
+    float incomeAmount;
     float incomeFrequency;
     String incomeTitle;
 
-    public Object IncomeSource(String title, int amount, int payments, int time){
+    public Object IncomeSource(String title, float amount, int payments, int time){
         this.incomeTitle = title;
         this.incomeAmount = amount;
         GetFrequency(payments, time);

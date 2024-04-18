@@ -1,16 +1,16 @@
 package javaProject.methods.FinancialElements;
 
 public class Deposit {
-    private int accountTotal;
-    private int incomeAmount;
+    private float accountTotal;
+    private float incomeAmount;
 
-    public int generateDeposit(int depositAmount, int accountTotal){
+    public float generateDeposit(float depositAmount, float accountTotal){
         Transaction deposit= new Transaction();
         this.incomeAmount = deposit.transactionEarn(depositAmount, accountTotal);
         return(this.incomeAmount);
     }
 
-    public int updateAccountTotal(int depositAmount, int accountTotal){
+    public float updateAccountTotal(float depositAmount, float accountTotal){
         Transaction income= new Transaction();
         this.accountTotal += income.transactionEarn(depositAmount, accountTotal);
         return(this.accountTotal);

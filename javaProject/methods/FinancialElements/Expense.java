@@ -1,10 +1,10 @@
 package javaProject.methods.FinancialElements;
 
 public class Expense {
-    int expenseAmount;
+    float expenseAmount;
     float expenseFrequency;
     String expenseTitle;
-    public Object ExpenseSource(String title, int amount, int payments, int time){
+    public Object ExpenseSource(String title, float amount, int payments, int time){
         this.expenseTitle = title;
         this.expenseAmount = amount;
         GetFrequency(payments, time);

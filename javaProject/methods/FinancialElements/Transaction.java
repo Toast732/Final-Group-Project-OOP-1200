@@ -3,21 +3,21 @@ package javaProject.methods.FinancialElements;
 import java.util.ArrayList;
 
 public class Transaction {
-    private int purchasePrice;
-    private int newAccountTotal;
+    private float purchasePrice;
+    private float newAccountTotal;
 
-    public int transactionBuy(int price, int accountTotal){
+    public float transactionBuy(float price, float accountTotal){
         this.purchasePrice = price;
         this.newAccountTotal = accountTotal - price;
         return(-price);
     }
-    public int transactionEarn(int price, int accountTotal){
+    public float transactionEarn(float price, float accountTotal){
         this.purchasePrice = price;
         this.newAccountTotal = accountTotal + price;
         return(price);
     }
 
-    public int getAccountTotal(){
+    public float getAccountTotal(){
         return(this.newAccountTotal);
     }
 }

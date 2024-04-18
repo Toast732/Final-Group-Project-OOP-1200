@@ -8,8 +8,8 @@ import java.util.Scanner;
 
 public class ManageFinances {
 
-    private static int accountBalance;
-    private static ArrayList<Integer> transactionList = new ArrayList<Integer>();
+    public static float accountBalance;
+    private static ArrayList<Float> transactionList = new ArrayList<Float>();
     private static ArrayList<Object> incomeList = new ArrayList<Object>();
     private static ArrayList<Object> expenseList = new ArrayList<Object>();
     static boolean running = true;
@@ -41,7 +41,7 @@ public class ManageFinances {
                 //adds the current variable to the transaction list
                 transactionList.add(Value.generateWithdraw(withdrawAmount, accountBalance));
                 //subtracts the expense from account balance
-                accountBalance += Value.updateAccountTotal(withdrawAmount, accountBalance);
+                //accountBalance += Value.updateAccountTotal(withdrawAmount, accountBalance);
             }
             //check if input is income
             else if (Objects.equals(input, "i")) {
@@ -75,7 +75,10 @@ public class ManageFinances {
                 int expenseTime = Integer.parseInt(expenseTimeString);
                 expenseList.add(Value.ExpenseSource(expenseNameString, expenseAmount, expensePayments, expenseTime));
             }
-            //exits program if neither condition is true
+            else if (Objects.equals(input, "b")) {
+
+            }
+            //exits program if no condition is true
             else{
                 System.out.println(accountBalance);
                 System.out.println(transactionList);
