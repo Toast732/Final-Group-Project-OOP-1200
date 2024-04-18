@@ -2,6 +2,7 @@ package javaProject.window;
 
 import javaProject.debug.DebugPrint;
 import javaProject.pageSegments.PageSegment;
+import javaProject.panels.MasterPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +14,8 @@ public class BankWindow {
 
     protected JFrame jFrame;
 
+    protected MasterPanel masterPanel;
+
     protected PageSegment currentSegment;
 
     public BankWindow(String title) {
@@ -22,6 +25,12 @@ public class BankWindow {
 
         // Create the JFrame
         this.jFrame = new JFrame(this.title);
+
+        // Create the Master Panel.
+        this.masterPanel = new MasterPanel();
+
+        // Add the master panel to the frame.
+        this.jFrame.add(this.masterPanel);
 
         this.jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //this.jFrame.setPreferredSize(new java.awt.Dimension(500, 500));
@@ -34,14 +43,28 @@ public class BankWindow {
         // Check if there was a previous segment.
         if(this.currentSegment != null){
             // Then remove the segment.
-            this.jFrame.remove(this.currentSegment.getPane());
+
+            // Add the North West pane to the masterPanel's top panel.
+            this.masterPanel.topPanelLeft.remove(this.currentSegment.getNWPane());
+
+            // Add the North East pane to the masterPanel's top panel.
+            this.masterPanel.topPanelRight.remove(this.currentSegment.getNEPane());
+
+            // Remove the tabbed pane from the masterPanel's bottom panel.
+            this.masterPanel.bottomPanel.remove(this.currentSegment.getTabbedPane());
         }
 
         // Set the current segment to this one we just got.
         this.currentSegment = segment;
 
-        // Add this to the frame.
-        this.jFrame.add(segment.getPane());
+        // Add the North West pane to the masterPanel's top panel.
+        this.masterPanel.topPanelLeft.add(segment.getNWPane());
+
+        // Add the North East pane to the masterPanel's top panel.
+        this.masterPanel.topPanelRight.add(segment.getNEPane());
+
+        // Add the tabbed pane to the masterPanel's bottom panel.
+        this.masterPanel.bottomPanel.add(segment.getTabbedPane());
 
         // Update the window.
         this.update();

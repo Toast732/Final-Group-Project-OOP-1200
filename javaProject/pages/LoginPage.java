@@ -74,7 +74,7 @@ public class LoginPage extends NormalPage {
 
             if(success){
                 // As well, set the current user in the UserHandler.
-                UserHandler.getInstance().setCurrentUser(login.getUser(username));
+                userHandler.setCurrentUser(login.getUser(username));
 
                 // Set the segment to the KnownUserSegment.
                 window.setSegment(new KnownUserSegment());
