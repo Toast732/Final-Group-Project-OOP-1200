@@ -4,13 +4,15 @@ import javaProject.transactions.OneTimeTransaction;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class AddTransactionPage extends NormalPage {
 
     public AddTransactionPage() {
         super("Add Transaction Page", new FlowLayout());
 
-        JPanel inputGridPanel = new JPanel(new GridLayout(6, 2));
+        JPanel inputGridPanel = new JPanel(new GridLayout(8, 2));
 
         JTextField AmountField = new JTextField(32);
 
@@ -25,8 +27,12 @@ public class AddTransactionPage extends NormalPage {
 
         ConfirmButton.setSize(new Dimension(50, 30));
 
+        JLabel ConfirmButtonClicked = new JLabel("");
+
         // Create the Amount label.
         JLabel TransactionNameLabel = new JLabel("Transaction Title:");
+
+        JButton ResetButton = new JButton("Clear boxes");
 
         inputGridPanel.add(TransactionNameLabel);
         inputGridPanel.add(TransactionNameField);
@@ -34,16 +40,25 @@ public class AddTransactionPage extends NormalPage {
         inputGridPanel.add(AmountField);
         inputGridPanel.add(ConfirmLabel);
         inputGridPanel.add(ConfirmButton);
+        inputGridPanel.add(ConfirmButtonClicked);
+        inputGridPanel.add(ResetButton);
         this.jPanel.add(inputGridPanel);
 
-        ConfirmButton.addActionListener(e -> {
-            int amount = Integer.parseInt(AmountField.getText());
-            String title = TransactionNameField.getText();
-
-            OneTimeTransaction transaction = new OneTimeTransaction();
-
-            transaction.setAmount((double) amount);
-            transaction.setTitle(title);
+        ConfirmButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Integer amount = Integer.parseInt(AmountField.getText());
+                String transactionName = TransactionNameField.getText();
+                ConfirmButtonClicked.setText("Generated transaction");
+            }
+        });
+        ResetButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AmountField.setText("");
+                TransactionNameField.setText("");
+                ConfirmButtonClicked.setText("");
+            }
         });
     }
 }
