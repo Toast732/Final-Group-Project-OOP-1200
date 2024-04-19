@@ -105,6 +105,12 @@ public class AddIncomePage extends NormalPage {
                 // Get the current user.
                 User user = UserHandler.getInstance().getUser();
 
+                new PopupSegment(
+                        "Success!",
+                        "Your transaction: " + transactionName + "of $" + yearlyTransactionAmount + " for the year is saved!",
+                        false
+                );
+
                 // Add the transaction to the user.
                 user.addTransaction(regularTransaction);
             } catch (NumberFormatException ex) {
@@ -223,6 +229,13 @@ public class AddIncomePage extends NormalPage {
                 // Get the current user.
                 User user = UserHandler.getInstance().getUser();
 
+                // Popup segment
+                new PopupSegment(
+                        "Success!",
+                        "Your transaction: " + transactionName + "of " + hoursWorkedAWeek + " hours weekly at a pay rate of $" + hourlyRate + "/hr is saved!",
+                        false
+                );
+
                 // Add the transaction to the user.
                 user.addTransaction(regularTransaction);
             } catch (NumberFormatException ex) {
@@ -313,6 +326,13 @@ public class AddIncomePage extends NormalPage {
 
                 // Get the current user.
                 User user = UserHandler.getInstance().getUser();
+
+                // Popup
+                new PopupSegment(
+                        "Success!",
+                        "Your one-time transaction: " + transactionName + "of $" + oneTimeTransactionAmount + " is saved!",
+                        false
+                );
 
                 // Add the transaction to the user.
                 user.addTransaction(oneTimeTransaction);
