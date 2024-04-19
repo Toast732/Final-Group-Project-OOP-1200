@@ -65,6 +65,9 @@ public class InvestmentsPage extends NormalPage {
         });
         BuyStockButton.addActionListener(e -> {
             try{
+                if (0 > Integer.parseInt(BuyStockLabel.getText())){
+                    throw new Exception();
+                }
                 stocksOwned += Integer.parseInt(BuyStockLabel.getText());
                 WindowHandler.getInstance().getWindow(0).update();
                 DebugPrint.info("New Stock Count: " + stocksOwned);
@@ -76,5 +79,26 @@ public class InvestmentsPage extends NormalPage {
                 BuyStockLabel.setText("Please insert a number before buying stocks");
             }
         });
+        SellStockButton.addActionListener(e -> {
+            try{
+                if (stocksOwned < Integer.parseInt(SellStockLabel.getText())){
+                    throw new Exception();
+                }
+                if (0 > Integer.parseInt(SellStockLabel.getText())){
+                    throw new Exception();
+                }
+                stocksOwned -= Integer.parseInt(SellStockLabel.getText());
+                WindowHandler.getInstance().getWindow(0).update();
+                DebugPrint.info("New Stock Count: " + stocksOwned);
+                this.inputGridPanel.remove(this.stocksOwnedLabel);
+                this.stocksOwnedLabel = new JLabel("Stocks Owned: " + stocksOwned);
+                this.inputGridPanel.add(this.stocksOwnedLabel);
+            }
+            catch(Exception a){
+                BuyStockLabel.setText("Please insert a number before selling stocks");
+            }
+        });
     }
 }
+
+
