@@ -10,7 +10,6 @@ public abstract class PageSegment {
 
     private final JTabbedPane jTabbedPane;
 
-    // Pane used for the t
     public final JPanel NWPane;
     private final JPanel NEPane;
 

@@ -64,6 +64,7 @@ public class LoginPage extends NormalPage {
             // Attempt to log in.
             Login login = new Login();
 
+            // Check if the login was successful.
             boolean success = login.authorizePass(username, password);
 
             // Get the window.
