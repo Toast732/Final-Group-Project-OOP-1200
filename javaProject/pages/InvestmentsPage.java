@@ -63,7 +63,7 @@ public class InvestmentsPage extends NormalPage {
             @Override
             public void actionPerformed(ActionEvent e) {
                 stockPrice = (float) round(random.nextFloat() * 10000) /100;
-                StockLabel.setText(String.valueOf(stockPrice));
+                StockLabel.setText("$" + String.valueOf(stockPrice));
             }
         });
         BuyStockButton.addActionListener(e -> {

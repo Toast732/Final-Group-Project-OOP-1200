@@ -36,7 +36,7 @@ public class ReportsAndAnalysis extends NormalPage{
         refreshButton.addActionListener(e -> {
             numberOfTransactionsLabel.setText("you have made " + user.stockTransactions.size() + " stock transactions");
             recentTransactionAmountLabel.setText("you last " + user.stockTransactions.getLast().transactionType +" "+ user.stockTransactions.getLast().numberOfStock + " stock");
-            recentTransactionAmountLabel.setText("you last " + user.stockTransactions.getLast().transactionType +" for "+ user.stockTransactions.getLast().stockPrice + " dollars");
+            recentTransactionPriceLabel.setText("you last " + user.stockTransactions.getLast().transactionType +" for "+ user.stockTransactions.getLast().stockPrice + " dollars");
         });
     }
 }
