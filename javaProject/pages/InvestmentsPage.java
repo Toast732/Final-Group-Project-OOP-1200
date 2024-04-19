@@ -15,7 +15,7 @@ import java.util.Random;
 import static java.lang.Math.round;
 
 public class InvestmentsPage extends NormalPage {
-
+    //initiate variables
     private float stockPrice;
 
     private final Random random;
@@ -31,7 +31,7 @@ public class InvestmentsPage extends NormalPage {
 
     public InvestmentsPage() {
         super("Investments", new FlowLayout());
-
+        //create page elements
         random = new Random();
 
         inputGridPanel = new JPanel(new GridLayout(9, 1));
@@ -54,6 +54,7 @@ public class InvestmentsPage extends NormalPage {
 
         JLabel StockLabel = new JLabel("");
 
+        //add page elements to panel
         inputGridPanel.add(InvestmentLabel);
         inputGridPanel.add(StockButton);
         inputGridPanel.add(StockLabel);
@@ -65,6 +66,7 @@ public class InvestmentsPage extends NormalPage {
         inputGridPanel.add(this.stocksOwnedLabel);
         this.jPanel.add(inputGridPanel);
 
+        //create event listener that randomizes stock price
         StockButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -72,6 +74,7 @@ public class InvestmentsPage extends NormalPage {
                 StockLabel.setText("$" + String.valueOf(stockPrice));
             }
         });
+        //add event listener for when buy stock button is pressed
         BuyStockButton.addActionListener(e -> {
             try{
                 if (0 > Integer.parseInt(BuyStockLabel.getText())){
@@ -92,6 +95,7 @@ public class InvestmentsPage extends NormalPage {
                 BuyStockLabel.setText("Please insert a number before buying stocks");
             }
         });
+        //add event listener for when sell stock button is clicked
         SellStockButton.addActionListener(e -> {
             try{
                 if (stocksOwned < Integer.parseInt(SellStockLabel.getText())){

@@ -26,7 +26,7 @@ public class ReportsAndAnalysis extends NormalPage{
 
     public ReportsAndAnalysis() {
         super("Report and Analysis", new FlowLayout());
-
+        //create page elements
         User user = UserHandler.getInstance().getUser();
 
         JPanel inputGridPanel = new JPanel(new GridLayout(9, 1));
@@ -41,6 +41,7 @@ public class ReportsAndAnalysis extends NormalPage{
 
         JButton refreshButton = new JButton("Refresh page");
 
+        //arrange page elements in proper order
         inputGridPanel.add(investmentLabel);
         inputGridPanel.add(numberOfTransactionsLabel);
         inputGridPanel.add(recentTransactionAmountLabel);
@@ -48,6 +49,7 @@ public class ReportsAndAnalysis extends NormalPage{
         inputGridPanel.add(refreshButton);
         this.jPanel.add(inputGridPanel);
 
+        //refresh button event listener
         refreshButton.addActionListener(e -> {
             numberOfTransactionsLabel.setText("you have made " + user.stockTransactions.size() + " stock transactions");
             recentTransactionAmountLabel.setText("you last " + user.stockTransactions.getLast().transactionType +" "+ user.stockTransactions.getLast().numberOfStock + " stock");
@@ -55,15 +57,8 @@ public class ReportsAndAnalysis extends NormalPage{
             this.barChart("Yes");
         });
 
-        for (int i = 0; i < user.stockTransactions.size(); i++) {
-            this.currentPrice = user.stockTransactions.get(i).stockPrice;
-            this.currentSaleAmount = user.stockTransactions.get(i).numberOfStock;
-            this.currentType = user.stockTransactions.get(i).transactionType;
-        }
-
-        //this.barChart("Yes");
-
     }
+    //create an empty graph
     public void barChart(String chartTitle) {
         JFreeChart barChart = ChartFactory.createBarChart(
                 chartTitle,
@@ -100,12 +95,13 @@ public class ReportsAndAnalysis extends NormalPage{
             splitStocks.get(first).add(stock);
         }
 
+        //create a new entry into the graph
         for (Map.Entry<String, ArrayList<Stock>> entry : splitStocks.entrySet()){
             ArrayList<Stock> stocks = entry.getValue();
             for (int stock_index = 0; stock_index < stocks.size(); stock_index++) {
                 // Get the stock
                 Stock stock = stocks.get(stock_index);
-
+                //add two bars to the graph
                 dataset.addValue(stock.stockPrice, stock.transactionType, stock.stockName+": Cost");
                 dataset.addValue(stock.numberOfStock, stock.transactionType, stock.stockName+": number purchased");
             }
