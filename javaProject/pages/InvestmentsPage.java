@@ -26,13 +26,15 @@ public class InvestmentsPage extends NormalPage {
 
     private final JPanel inputGridPanel;
 
+    private String stockName;
+
 
     public InvestmentsPage() {
         super("Investments", new FlowLayout());
 
         random = new Random();
 
-        inputGridPanel = new JPanel(new GridLayout(8, 1));
+        inputGridPanel = new JPanel(new GridLayout(9, 1));
 
         JLabel InvestmentLabel = new JLabel("Investments:");
 
@@ -48,16 +50,19 @@ public class InvestmentsPage extends NormalPage {
 
         JTextField SellStockLabel = new JTextField("Enter how many stocks you want to sell");
 
+        JTextField StockNameLabel = new JTextField("Enter the name of the stock");
+
         JLabel StockLabel = new JLabel("");
 
         inputGridPanel.add(InvestmentLabel);
-        inputGridPanel.add(this.stocksOwnedLabel);
         inputGridPanel.add(StockButton);
         inputGridPanel.add(StockLabel);
+        inputGridPanel.add(StockNameLabel);
         inputGridPanel.add(BuyStockLabel);
         inputGridPanel.add(BuyStockButton);
         inputGridPanel.add(SellStockLabel);
         inputGridPanel.add(SellStockButton);
+        inputGridPanel.add(this.stocksOwnedLabel);
         this.jPanel.add(inputGridPanel);
 
         StockButton.addActionListener(new ActionListener() {
@@ -72,7 +77,7 @@ public class InvestmentsPage extends NormalPage {
                 if (0 > Integer.parseInt(BuyStockLabel.getText())){
                     throw new Exception();
                 }
-                Stock purchase = new Stock(Integer.parseInt(BuyStockLabel.getText()), stockPrice, "bought");
+                Stock purchase = new Stock(Integer.parseInt(BuyStockLabel.getText()), stockPrice, "bought", StockNameLabel.getText());
                 User user = UserHandler.getInstance().getUser();
                 user.stockTransactions.add(purchase);
                 stocksOwned += Integer.parseInt(BuyStockLabel.getText());
@@ -81,6 +86,7 @@ public class InvestmentsPage extends NormalPage {
                 this.inputGridPanel.remove(this.stocksOwnedLabel);
                 this.stocksOwnedLabel = new JLabel("Stocks Owned: " + stocksOwned);
                 this.inputGridPanel.add(this.stocksOwnedLabel);
+
             }
             catch(Exception a){
                 BuyStockLabel.setText("Please insert a number before buying stocks");
@@ -94,7 +100,7 @@ public class InvestmentsPage extends NormalPage {
                 if (0 > Integer.parseInt(SellStockLabel.getText())){
                     throw new Exception();
                 }
-                Stock sell = new Stock(Integer.parseInt(SellStockLabel.getText()), stockPrice, "sold");
+                Stock sell = new Stock(Integer.parseInt(SellStockLabel.getText()), stockPrice, "sold", StockNameLabel.getText());
                 User user = UserHandler.getInstance().getUser();
                 user.stockTransactions.add(sell);
                 stocksOwned -= Integer.parseInt(SellStockLabel.getText());
