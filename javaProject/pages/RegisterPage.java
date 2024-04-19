@@ -1,11 +1,9 @@
 package javaProject.pages;
 
-
 import javax.swing.*;
-import java.awt.Window;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import javaProject.methods.Login;
-import javaProject.accounts.users.UserHandler;
 
 public class RegisterPage extends NormalPage {
 
@@ -14,38 +12,48 @@ public class RegisterPage extends NormalPage {
     private JButton registerButton;
     private JLabel registrationStatusLabel;
     private Login login;
-    
+
     public RegisterPage() {
         // Create the page for this, and call it "Register"
-        super("Register");
+        super("Register", new GridLayout(3, 1)); // Set the layout of the RegisterPage to GridLayout with 3 rows and 1 column
 
-        this.jPanel.add(new JLabel("Username:"));
+        JPanel inputPanel = new JPanel(new GridLayout(5, 2)); // Create a panel for input fields with GridLayout 5 rows and 2 columns
+
+        inputPanel.add(new JLabel("Username:"));
         usernameField = new JTextField();
-        this.jPanel.add(usernameField);
+        inputPanel.add(usernameField);
 
-        this.jPanel.add(new JLabel("Password:"));
+        inputPanel.add(new JLabel("Password:"));
         passwordField = new JPasswordField();
-        this.jPanel.add(passwordField);
+        inputPanel.add(passwordField);
 
-        this.jPanel.add(new JLabel("First Name:"));
+        inputPanel.add(new JLabel("First Name:"));
         nameField = new JTextField();
-        this.jPanel.add(nameField);
+        inputPanel.add(nameField);
 
-        this.jPanel.add(new JLabel("Last Name:"));
+        inputPanel.add(new JLabel("Last Name:"));
         familyField = new JTextField();
-        this.jPanel.add(familyField);
+        inputPanel.add(familyField);
 
-        this.jPanel.add(new JLabel("Email:"));
+        inputPanel.add(new JLabel("Email:"));
         emailField = new JTextField();
-        this.jPanel.add(emailField);
+        inputPanel.add(emailField);
 
-        this.registerButton = new JButton("Register");
+        JPanel buttonPanel = new JPanel(); // Create a panel for the register button
+        registerButton = new JButton("Register");
         registerButton.addActionListener(this::performRegistration);
-        this.jPanel.add(registerButton);
+        buttonPanel.add(registerButton);
 
-        this.registrationStatusLabel = new JLabel();
-        this.jPanel.add(registrationStatusLabel);
+        JPanel statusPanel = new JPanel(); // Create a panel for the registration status label
+        registrationStatusLabel = new JLabel();
+        statusPanel.add(registrationStatusLabel);
+
+        // Add the panels to the RegisterPage
+        this.jPanel.add(inputPanel);
+        this.jPanel.add(buttonPanel);
+        this.jPanel.add(statusPanel);
     }
+
     private void performRegistration(ActionEvent event) {
         String username = usernameField.getText();
         String password = new String(passwordField.getPassword());
