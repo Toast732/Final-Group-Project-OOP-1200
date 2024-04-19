@@ -110,8 +110,8 @@ public class RegisterPage extends NormalPage {
         String confirmPassword = new String(checkPasswordField.getPassword());
         String name = nameField.getText();
         String lastName = familyField.getText();
-        String email = emailField.getText();
-        String confrimEmail = confirmEmailField.getText();
+        String email = emailField.getText().toLowerCase();
+        String confrimEmail = confirmEmailField.getText().toLowerCase();
 
         //Clear previous errors
         clearErrorLabels();
