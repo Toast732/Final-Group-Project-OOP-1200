@@ -19,9 +19,8 @@ public class UserProfileGUI extends JFrame {
         setLayout(new GridLayout(0, 1)); // Use GridLayout for better organization of labels
 
         // Display various user details
-        add(new JLabel("Welcome, " + user.getName()));
+        add(new JLabel("Welcome, " + user.getName() + " " + user.getFamilyName()));
         add(new JLabel("Username: " + user.getUsername()));
-        add(new JLabel("Address: " + user.getFamilyName()));
         add(new JLabel("Email: " + user.getEmail()));
 
         setVisible(true);
