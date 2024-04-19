@@ -110,8 +110,8 @@ public class RegisterPage extends NormalPage {
         String confirmPassword = new String(checkPasswordField.getPassword());
         String name = nameField.getText();
         String lastName = familyField.getText();
-        String email = emailField.getText();
-        String confrimEmail = confirmEmailField.getText();
+        String email = emailField.getText().toLowerCase();
+        String confrimEmail = confirmEmailField.getText().toLowerCase();
 
         //Clear previous errors
         clearErrorLabels();
@@ -218,7 +218,7 @@ public class RegisterPage extends NormalPage {
                 name,
                 lastName,
                 email);
-        if (success) {
+        if (success) { //If the registration was successful, display message with the Username and instruct to return to Login with it
             new PopupSegment("Registration Successful!", "Go back to login and use your Username:" + username + " and Password.", false);
             clearErrorLabels();
             clearFields();
@@ -227,8 +227,6 @@ public class RegisterPage extends NormalPage {
         } else {
             registrationStatusLabel.setText("Registration Failed! Username already exists.");
         }
-
-
     }
     // Clear errors
     private void clearErrorLabels() {

@@ -46,6 +46,13 @@ public class DashboardPage extends NormalPage {
         double runningExpenses = 0;
         double runningIncome = 0;
 
+        // If the user has no transactions,just put a label saying they should add some.
+        if (user.transactions.isEmpty()) {
+            this.dashboardPanel.add(new JLabel("You have no transactions. Add some to see a report."));
+            this.jPanel.add(this.dashboardPanel);
+            return;
+        }
+
         // Iterate through all the user's transactions.
         for (int i = 0; i < user.transactions.size(); i++) {
 
@@ -68,7 +75,7 @@ public class DashboardPage extends NormalPage {
         }
 
         // Create a barchart via JFreeChart with the running expenses and income.
-        JFreeChart barChart = ChartFactory.createBarChart("Running Expenses and Income", "Type", "Amount", createDataset(runningExpenses, runningIncome), PlotOrientation.VERTICAL, true, true, false);
+        JFreeChart barChart = ChartFactory.createBarChart("Monthly Balance Report", "Type", "Amount", createDataset(runningExpenses, runningIncome), PlotOrientation.VERTICAL, true, true, false);
 
         // Create a chart panel with the barchart.
         ChartPanel chartPanel = new ChartPanel(barChart);
