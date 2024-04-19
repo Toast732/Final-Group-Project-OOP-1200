@@ -146,5 +146,4 @@ public class AddRegularTransactionPage extends NormalPage {
         // Return.
         return hourlyPanel;
     }
-
 }
