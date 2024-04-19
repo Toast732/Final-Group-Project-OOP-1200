@@ -2,12 +2,15 @@ package javaProject.methods;
 
 import java.io.*;
 import java.util.*;
+import javaProject.methods.FileIOManager;
 
 public class Login {
     private Map<String, User> userDatabase = new HashMap<>();
-    private final String USERS_FILE = "users.txt";
+    //old: private final String USERS_FILE = "users.txt";
+    private final FileIOManager fileManager;
 
     public Login() {
+        fileManager = new FileIOManager("users.txt");
         loadUsers();
     }
 
@@ -22,6 +25,21 @@ public class Login {
 
     public boolean register(String username, String password, String name, String familyName, String email) {
         if (userDatabase.containsKey(username)) {
+            return false;
+        }
+        User newUser = new User(username, password, name, familyName, email);
+        userDatabase.put(username, newUser);
+        String userData = String.join("|", username, password, name, familyName, email);
+        try {
+            fileManager.appendToFile(userData);
+        } catch (IOException e) {
+            System.out.println("Error saving user: " + e.getMessage());
+            return false;
+        }
+        return true;
+    }
+    /*public boolean register(String username, String password, String name, String familyName, String email) {
+        if (userDatabase.containsKey(username)) {
             return false; // User already exists
         }
         User newUser = new User(username, password, name, familyName, email);
@@ -34,11 +52,26 @@ public class Login {
             return false; // Return false if there is an error during saving
         }
         return true;
-    }
+    } */
 
 
     private void loadUsers() {
-        File file = new File(USERS_FILE);
+        List<String> lines = fileManager.readFile();
+        userDatabase.clear();
+        for (String line : lines) {
+            String[] userData = line.split("\\|");
+            if (userData.length == 5) {
+                try {
+                    User user = new User(userData[0], userData[1], userData[2], userData[3], userData[4]);
+                    userDatabase.put(userData[0], user);
+                } catch (Exception e) {
+                    System.out.println("Error retrieving user data: " + e.getMessage());
+                }
+            }
+        }
+    }
+
+        /*File file = new File(USERS_FILE);
         if (!file.exists()) {
             return; // If the file doesn't exist, there's nothing to load
         } else {
@@ -52,7 +85,7 @@ public class Login {
                             User user = new User(userData[0], userData[1], userData[2], userData[3], userData[4]);
                             userDatabase.put(userData[0], user);
                         } catch (Exception e) {
-                            System.out.println("Error parsing user data for line: " + line + "; Error: " + e.getMessage());
+                            System.out.println("Error getting user data for line: " + line + "; Error: " + e.getMessage());
                         }
                     } else {
                         System.out.println("Incorrect data format for line: " + line);
@@ -64,7 +97,7 @@ public class Login {
         }
     }
 
-    private void userStore(String content) throws IOException {
+     private void userStore(String content) throws IOException {
         File profileInfo = new File(USERS_FILE);
         if (!profileInfo.exists()) {
             boolean created = profileInfo.createNewFile();
@@ -79,5 +112,5 @@ public class Login {
         } catch (IOException e) {
             throw new IOException("Failed to write to " + "users.txt" + ": " + e.getMessage(), e);
         }
-    }
+    } */
 }
