@@ -20,14 +20,13 @@ public class Login {
         return user != null && user.getPassword().equals(password);
     }
 
-    public boolean register(String username, String password, String name, String address,
-                            String phoneNumber, String email, String favoriteAnimal) {
+    public boolean register(String username, String password, String name, String familyName, String email) {
         if (userDatabase.containsKey(username)) {
             return false; // User already exists
         }
-        User newUser = new User(username, password, name, address, phoneNumber, email, favoriteAnimal);
+        User newUser = new User(username, password, name, familyName, email);
         userDatabase.put(username, newUser);
-        String userData = String.join("|", username, password, name, address, phoneNumber, email, favoriteAnimal);
+        String userData = String.join("|", username, password, name, familyName, email);
         try {
             userStore(userData); // Append user data to the file
         } catch (IOException e) {
@@ -48,10 +47,9 @@ public class Login {
                 userDatabase.clear(); // Clears existing data, useful if reloading users
                 while ((line = reader.readLine()) != null) {
                     String[] userData = line.split("\\|");
-                    if (userData.length == 7) {
+                    if (userData.length == 5) {
                         try {
-                            User user = new User(userData[0], userData[1], userData[2], userData[3],
-                                    userData[4], userData[5], userData[6]);
+                            User user = new User(userData[0], userData[1], userData[2], userData[3], userData[4]);
                             userDatabase.put(userData[0], user);
                         } catch (Exception e) {
                             System.out.println("Error parsing user data for line: " + line + "; Error: " + e.getMessage());
@@ -65,7 +63,6 @@ public class Login {
             }
         }
     }
-
 
     private void userStore(String content) throws IOException {
         File profileInfo = new File(USERS_FILE);

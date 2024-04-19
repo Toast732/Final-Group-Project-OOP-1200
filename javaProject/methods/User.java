@@ -4,27 +4,22 @@ public class User {
     private String username;
     private String password;
     private String name;
-    private String address;
-    private String phoneNumber;
+    private String familyName;
     private String email;
-    private String favoriteAnimal;
 
     public User(
             String username,
             String password,
             String name,
-            String address,
-            String phoneNumber,
-            String email,
-            String favoriteAnimal
+            String familyName,
+            String email
+
     ) {
         this.username = username;
         this.password = password;
         this.name = name;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
+        this.familyName = familyName;
         this.email = email;
-        this.favoriteAnimal = favoriteAnimal;
     }
 
     public String getUsername() {
@@ -39,19 +34,12 @@ public class User {
         return name;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getFamilyName() {
+        return familyName;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public String getFavoriteAnimal() {
-        return favoriteAnimal;
-    }
 }

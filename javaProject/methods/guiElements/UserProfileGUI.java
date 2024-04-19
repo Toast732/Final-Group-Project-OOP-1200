@@ -21,10 +21,8 @@ public class UserProfileGUI extends JFrame {
         // Display various user details
         add(new JLabel("Welcome, " + user.getName()));
         add(new JLabel("Username: " + user.getUsername()));
-        add(new JLabel("Address: " + user.getAddress()));
-        add(new JLabel("Phone: " + user.getPhoneNumber()));
+        add(new JLabel("Address: " + user.getFamilyName()));
         add(new JLabel("Email: " + user.getEmail()));
-        add(new JLabel("Favorite Animal: " + user.getFavoriteAnimal()));
 
         setVisible(true);
     }
