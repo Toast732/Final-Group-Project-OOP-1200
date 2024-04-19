@@ -71,7 +71,7 @@ public class InvestmentsPage extends NormalPage {
                 if (0 > Integer.parseInt(BuyStockLabel.getText())){
                     throw new Exception();
                 }
-                Stock purchase = new Stock(Integer.parseInt(BuyStockLabel.getText()), stockPrice);
+                Stock purchase = new Stock(Integer.parseInt(BuyStockLabel.getText()), stockPrice, "bought");
                 User user = UserHandler.getInstance().getUser();
                 user.stockTransactions.add(purchase);
                 stocksOwned += Integer.parseInt(BuyStockLabel.getText());
@@ -93,7 +93,7 @@ public class InvestmentsPage extends NormalPage {
                 if (0 > Integer.parseInt(SellStockLabel.getText())){
                     throw new Exception();
                 }
-                Stock sell = new Stock(Integer.parseInt(SellStockLabel.getText()), stockPrice);
+                Stock sell = new Stock(Integer.parseInt(SellStockLabel.getText()), stockPrice, "sold");
                 User user = UserHandler.getInstance().getUser();
                 user.stockTransactions.add(sell);
                 stocksOwned -= Integer.parseInt(SellStockLabel.getText());
