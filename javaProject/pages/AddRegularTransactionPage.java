@@ -30,7 +30,24 @@ public class AddRegularTransactionPage extends NormalPage {
 
         JPanel yearlyPanel = new JPanel(new GridLayout(2, 1));
 
-        JPanel transactionGrid = new JPanel(new GridLayout(1, 2));
+        JPanel transactionGrid = new JPanel(new GridLayout(2, 2));
+
+        // Add a label & field for the transaction name.
+        JLabel transactionNameLabel = new JLabel("Transaction Name:");
+
+        JPanel transactionNamePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+
+        transactionNamePanel.add(transactionNameLabel);
+
+        JTextField transactionNameField = new JTextField(32);
+
+        JPanel transactionNameFieldPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+        transactionNameFieldPanel.add(transactionNameField);
+
+        transactionGrid.add(transactionNamePanel);
+
+        transactionGrid.add(transactionNameFieldPanel);
 
         // Create the label for the yearly transaction amount
         JLabel yearlyTransactionAmountLabel = new JLabel("Yearly Transaction Amount:");
@@ -63,6 +80,38 @@ public class AddRegularTransactionPage extends NormalPage {
 
         // Add the submit button to the page.
         yearlyPanel.add(submitButton);
+
+        // Call a method whenever the button is clicked.
+        submitButton.addActionListener(e -> {
+
+            // Get the text in the transaction name field.
+            String transactionName = transactionNameField.getText();
+
+            // Get the text in the yearly transaction amount field.
+            String yearlyTransactionAmount = yearlyTransactionAmountField.getText();
+
+            // Create a try/catch to catch errors from any of the fields.
+            try {
+                // Create a new regular transaction.
+                RegularTransaction regularTransaction = new RegularTransaction(transactionName);
+
+                // Set the hourly amount.
+                regularTransaction.setYearly(Double.parseDouble(yearlyTransactionAmount));
+
+                // Get the current user.
+                User user = UserHandler.getInstance().getUser();
+
+                // Add the transaction to the user.
+                user.transactions.add(regularTransaction);
+            } catch (NumberFormatException ex) {
+                // Set the segment to the popup segment, tell it to play the sound.
+                new PopupSegment(
+                        "Error",
+                        "Please enter a valid number in each of the fields.",
+                        true
+                );
+            }
+        });
 
         // Return.
         return yearlyPanel;
