@@ -106,7 +106,7 @@ public class AddIncomePage extends NormalPage {
                 User user = UserHandler.getInstance().getUser();
 
                 // Add the transaction to the user.
-                user.transactions.add(regularTransaction);
+                user.addTransaction(regularTransaction);
             } catch (NumberFormatException ex) {
                 // Set the segment to the popup segment, tell it to play the sound.
                 new PopupSegment(
@@ -224,7 +224,7 @@ public class AddIncomePage extends NormalPage {
                 User user = UserHandler.getInstance().getUser();
 
                 // Add the transaction to the user.
-                user.transactions.add(regularTransaction);
+                user.addTransaction(regularTransaction);
             } catch (NumberFormatException ex) {
                 // Set the segment to the popup segment, tell it to play the sound.
                 new PopupSegment(
@@ -315,7 +315,7 @@ public class AddIncomePage extends NormalPage {
                 User user = UserHandler.getInstance().getUser();
 
                 // Add the transaction to the user.
-                user.transactions.add(oneTimeTransaction);
+                user.addTransaction(oneTimeTransaction);
 
             } catch (NumberFormatException ex) {
                 // Set the segment to the popup segment, tell it to play the sound.
