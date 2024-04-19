@@ -68,7 +68,24 @@ public class AddRegularTransactionPage extends NormalPage {
 
         JPanel hourlyPanel = new JPanel(new GridLayout(2, 1));
 
-        JPanel transactionGrid = new JPanel(new GridLayout(2, 2));
+        JPanel transactionGrid = new JPanel(new GridLayout(3, 2));
+
+        // Add a label & field for the transaction name.
+        JLabel transactionNameLabel = new JLabel("Transaction Name:");
+
+        JPanel transactionNamePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+
+        transactionNamePanel.add(transactionNameLabel);
+
+        JTextField transactionNameField = new JTextField(32);
+
+        JPanel transactionNameFieldPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+        transactionNameFieldPanel.add(transactionNameField);
+
+        transactionGrid.add(transactionNamePanel);
+
+        transactionGrid.add(transactionNameFieldPanel);
 
         // Create the label for the hourly transaction amount
         JLabel hoursWorkedAWeekLabel = new JLabel("Hours Worked a Week:");
@@ -89,6 +106,7 @@ public class AddRegularTransactionPage extends NormalPage {
         hoursWorkedAWeekFieldPanel.add(hoursWorkedAWeekField);
 
         // Add the labels to the grid.
+
         transactionGrid.add(hoursWorkedAWeekPanel);
 
         transactionGrid.add(hoursWorkedAWeekFieldPanel);

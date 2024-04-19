@@ -1,11 +1,16 @@
 package javaProject.methods;
 
+import javaProject.methods.FinancialElements.Transaction;
+
+import java.util.ArrayList;
+
 public class User {
     private String username;
     private String password;
     private String name;
     private String familyName;
     private String email;
+    public ArrayList<Transaction> transactions = new ArrayList<>();
 
     public User(
             String username,
@@ -41,5 +46,4 @@ public class User {
     public String getEmail() {
         return email;
     }
-
 }
