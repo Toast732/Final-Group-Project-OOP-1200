@@ -141,7 +141,7 @@ public class RegisterPage extends NormalPage {
         }
 
         if (confirmPassword.trim().isEmpty()) {
-            checkPasswordField.setText("Password cannot be blank.");
+            confirmPasswordErrorLabel.setText("Password cannot be blank.");
             validationFailed = true;
         }
 
