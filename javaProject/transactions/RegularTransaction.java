@@ -1,7 +1,6 @@
 package javaProject.transactions;
 
 public class RegularTransaction extends Transaction {
-    public String transactionType;
     protected double dailyAmount;
 
     // Normal, gives daily amount.

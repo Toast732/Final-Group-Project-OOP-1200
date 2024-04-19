@@ -3,7 +3,6 @@ package javaProject.pages;
 import javaProject.accounts.users.UserHandler;
 import javaProject.debug.DebugPrint;
 import javaProject.methods.User;
-import javaProject.pages.NormalPage;
 import javaProject.stocks.Stock;
 import javaProject.window.WindowHandler;
 
@@ -18,12 +17,14 @@ import static java.lang.Math.round;
 public class InvestmentsPage extends NormalPage {
 
     private float stockPrice;
-    private Random random;
+
+    private final Random random;
+
     private int stocksOwned;
 
     private JLabel stocksOwnedLabel;
 
-    private JPanel inputGridPanel;
+    private final JPanel inputGridPanel;
 
 
     public InvestmentsPage() {
@@ -109,5 +110,3 @@ public class InvestmentsPage extends NormalPage {
         });
     }
 }
-
-

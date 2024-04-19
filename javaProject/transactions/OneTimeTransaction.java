@@ -3,8 +3,6 @@ package javaProject.transactions;
 public class OneTimeTransaction extends Transaction{
 
     private double singleAmount;
-    public String transactionType;
-    private String transactionName;
     @Override
     public double getAmount(int days) {
         return 0;

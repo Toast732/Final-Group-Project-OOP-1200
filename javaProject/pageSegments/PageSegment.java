@@ -8,7 +8,7 @@ import java.awt.*;
 
 public abstract class PageSegment {
 
-    private final JTabbedPane jTabbedPane;
+    public final JTabbedPane jTabbedPane;
 
     public final JPanel NWPane;
     private final JPanel NEPane;
