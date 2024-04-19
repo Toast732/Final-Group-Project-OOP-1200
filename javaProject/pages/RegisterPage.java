@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.regex.Pattern;
 import javaProject.methods.Login;
+import javaProject.pageSegments.PopupSegment;
 
 public class RegisterPage extends NormalPage {
 
@@ -218,6 +219,10 @@ public class RegisterPage extends NormalPage {
                 lastName,
                 email);
         if (success) {
+            new PopupSegment("Registration Successful!", "Go back to login and use your Username:" + username + " and Password.", false);
+            clearErrorLabels();
+            clearFields();
+
             registrationStatusLabel.setText("Registration Successful! Please log in.");
         } else {
             registrationStatusLabel.setText("Registration Failed! Username already exists.");
@@ -225,6 +230,7 @@ public class RegisterPage extends NormalPage {
 
 
     }
+    // Clear errors
     private void clearErrorLabels() {
         usernameErrorLabel.setText("");
         passwordErrorLabel.setText("");
@@ -233,6 +239,16 @@ public class RegisterPage extends NormalPage {
         lastNameErrorLabel.setText("");
         emailErrorLabel.setText("");
         emailConfirmErrorLabel.setText("");
+    }
+    // Clear entry fields
+    private void clearFields() {
+        usernameField.setText("");
+        passwordField.setText("");
+        checkPasswordField.setText("");
+        nameField.setText("");
+        familyField.setText("");
+        emailField.setText("");
+        confirmEmailField.setText("");
     }
 
     //As I will need to check multiple arguments potentially due to my use of | as a delimiter

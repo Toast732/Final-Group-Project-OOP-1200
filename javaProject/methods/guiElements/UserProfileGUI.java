@@ -5,7 +5,7 @@ import java.awt.*;
 import javaProject.methods.User;  // Ensure User class is imported
 
 public class UserProfileGUI extends JFrame {
-    private User user;  // Store the entire User object
+    private final User user;  // Store the entire User object
 
     public UserProfileGUI(User user) {
         this.user = user;

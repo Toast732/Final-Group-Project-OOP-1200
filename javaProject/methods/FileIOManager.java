@@ -5,7 +5,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-// Handles fileIO read and write with appends for new information added to not overwrite
+// Handles fileIO read and write - uses append to write without overwrite
 public class FileIOManager {
     private final String filePath;
 
