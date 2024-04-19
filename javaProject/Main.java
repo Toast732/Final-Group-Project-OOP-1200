@@ -1,8 +1,6 @@
 package javaProject;
 
-import javaProject.accounts.users.UserHandler;
-import javaProject.methods.Login;
-import javaProject.pageSegments.KnownUserSegment;
+import javaProject.pageSegments.GuestUserSegment;
 import javaProject.pageSegments.PageSegment;
 import javaProject.window.BankWindow;
 import javaProject.window.WindowHandler;
@@ -22,10 +20,12 @@ public class Main {
         // Add the window to the window handler.
         windowHandler.addWindow(window);
 
-        UserHandler.getInstance().setCurrentUser(new Login().getUser(""));
+        //UserHandler.getInstance().setCurrentUser(new Login().getUser(""));
 
         // Create the GuestUserSegment.
-        PageSegment guestUserSegment = new KnownUserSegment();
+        PageSegment guestUserSegment = new GuestUserSegment();
+
+        // guestUserSegment = new KnownUserSegment();
 
         window.setSegment(guestUserSegment);
 

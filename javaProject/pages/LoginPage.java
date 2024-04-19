@@ -59,7 +59,7 @@ public class LoginPage extends NormalPage {
 
         loginButton.addActionListener(e -> {
             // Get the username and password.
-            String username = userNameField.getText();
+            String username = userNameField.getText().toLowerCase();
             String password = new String(passwordField.getPassword());
 
             // Attempt to log in.
