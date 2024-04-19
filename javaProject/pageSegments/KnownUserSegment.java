@@ -6,6 +6,7 @@ import javaProject.methods.User;
 import javaProject.pages.AddRegularTransactionPage;
 import javaProject.pages.AddTransactionPage;
 import javaProject.pages.InvestmentsPage;
+import javaProject.pages.TransactionHistory;
 import javaProject.pages.buttons.LogoutButton;
 
 import javax.swing.*;
@@ -32,5 +33,6 @@ public class KnownUserSegment extends PageSegment {
         super.addPage(new AddRegularTransactionPage());
         super.addPage(new AddTransactionPage());
         super.addPage(new InvestmentsPage());
+        super.addPage(new TransactionHistory());
     }
 }
