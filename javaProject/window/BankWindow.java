@@ -105,4 +105,8 @@ public class BankWindow {
             errorSound.run();
         }
     }
+
+    public PageSegment getSegment() {
+        return this.currentSegment;
+    }
 }

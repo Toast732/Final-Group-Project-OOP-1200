@@ -1,7 +1,7 @@
 package javaProject.methods;
 
-import javaProject.methods.FinancialElements.Transaction;
 import javaProject.stocks.Stock;
+import javaProject.transactions.Transaction;
 
 import java.util.ArrayList;
 

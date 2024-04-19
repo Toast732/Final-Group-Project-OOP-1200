@@ -4,6 +4,7 @@ import javaProject.accounts.users.UserHandler;
 import javaProject.customLayouts.GridBagVerticalList;
 import javaProject.methods.Login;
 import javaProject.pageSegments.KnownUserSegment;
+import javaProject.pageSegments.PopupSegment;
 import javaProject.window.BankWindow;
 import javaProject.window.WindowHandler;
 
@@ -81,7 +82,12 @@ public class LoginPage extends NormalPage {
                 window.setSegment(new KnownUserSegment());
                 // If we failed logging in.
             } else {
-                window.soundError();
+                // Set the current segment to the popup segment, tell it to play the sound.
+                new PopupSegment(
+                        "Login Error",
+                        "The username or password is incorrect.",
+                        true
+                );
             }
         });
     }

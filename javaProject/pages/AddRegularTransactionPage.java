@@ -1,6 +1,10 @@
 package javaProject.pages;
 
+import javaProject.accounts.users.UserHandler;
+import javaProject.methods.User;
+import javaProject.pageSegments.PopupSegment;
 import javaProject.panels.DropdownPanel;
+import javaProject.transactions.RegularTransaction;
 
 import javax.swing.*;
 import java.awt.*;
@@ -142,6 +146,41 @@ public class AddRegularTransactionPage extends NormalPage {
 
         // Add the submit button to the page.
         hourlyPanel.add(submitButton);
+
+        // Call a method whenever the button is clicked.
+        submitButton.addActionListener(e -> {
+
+            // Get the text in the transaction name field.
+            String transactionName = transactionNameField.getText();
+
+            // Get the text in the hours worked a week field.
+            String hoursWorkedAWeek = hoursWorkedAWeekField.getText();
+
+            // Get the text in the hourly rate field.
+            String hourlyRate = hourlyRateField.getText();
+
+            // Create a try/catch to catch errors from any of the fields.
+            try {
+                // Create a new regular transaction.
+                RegularTransaction regularTransaction = new RegularTransaction(transactionName);
+
+                // Set the hourly amount.
+                regularTransaction.setHourly(Double.parseDouble(hoursWorkedAWeek), Double.parseDouble(hourlyRate));
+
+                // Get the current user.
+                User user = UserHandler.getInstance().getUser();
+
+                // Add the transaction to the user.
+                user.transactions.add(regularTransaction);
+            } catch (NumberFormatException ex) {
+                // Set the segment to the popup segment, tell it to play the sound.
+                new PopupSegment(
+                        "Error",
+                        "Please enter a valid number in each of the fields.",
+                        true
+                );
+            }
+        });
 
         // Return.
         return hourlyPanel;
