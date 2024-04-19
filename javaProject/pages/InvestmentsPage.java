@@ -1,7 +1,10 @@
 package javaProject.pages;
 
+import javaProject.accounts.users.UserHandler;
 import javaProject.debug.DebugPrint;
+import javaProject.methods.User;
 import javaProject.pages.NormalPage;
+import javaProject.stocks.Stock;
 import javaProject.window.WindowHandler;
 
 import javax.swing.*;
@@ -68,6 +71,9 @@ public class InvestmentsPage extends NormalPage {
                 if (0 > Integer.parseInt(BuyStockLabel.getText())){
                     throw new Exception();
                 }
+                Stock purchase = new Stock(Integer.parseInt(BuyStockLabel.getText()), stockPrice);
+                User user = UserHandler.getInstance().getUser();
+                user.stockTransactions.add(purchase);
                 stocksOwned += Integer.parseInt(BuyStockLabel.getText());
                 WindowHandler.getInstance().getWindow(0).update();
                 DebugPrint.info("New Stock Count: " + stocksOwned);
@@ -87,6 +93,9 @@ public class InvestmentsPage extends NormalPage {
                 if (0 > Integer.parseInt(SellStockLabel.getText())){
                     throw new Exception();
                 }
+                Stock sell = new Stock(Integer.parseInt(SellStockLabel.getText()), stockPrice);
+                User user = UserHandler.getInstance().getUser();
+                user.stockTransactions.add(sell);
                 stocksOwned -= Integer.parseInt(SellStockLabel.getText());
                 WindowHandler.getInstance().getWindow(0).update();
                 DebugPrint.info("New Stock Count: " + stocksOwned);

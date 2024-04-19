@@ -1,6 +1,7 @@
 package javaProject.methods;
 
 import javaProject.methods.FinancialElements.Transaction;
+import javaProject.stocks.Stock;
 
 import java.util.ArrayList;
 
@@ -11,6 +12,7 @@ public class User {
     private String familyName;
     private String email;
     public ArrayList<Transaction> transactions = new ArrayList<>();
+    public ArrayList<Stock> stockTransactions = new ArrayList<>();
 
     public User(
             String username,
