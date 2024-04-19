@@ -1,24 +1,31 @@
 package javaProject.methods;
 
+//Imports
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+// Handles fileIO read and write with appends for new information added to not overwrite
 public class FileIOManager {
     private final String filePath;
 
+    // Constructor that initializes the FileIOManager with a specific file path.
     public FileIOManager(String filePath) {
         this.filePath = filePath;
     }
 
+    // Reads all lines from the file and returns them as a list of strings.
     public List<String> readFile() {
         List<String> lines = new ArrayList<>();
         File file = new File(filePath);
+
+        // Check if the file exists before attempting to read
         if (!file.exists()) {
             System.out.println("File does not exist: " + filePath);
             return lines;
         }
 
+        // BufferedReader to read text from a file
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -30,6 +37,7 @@ public class FileIOManager {
         return lines;
     }
 
+    // Ensure the file exists and create it if it doesn't
     public void appendToFile(String content) throws IOException {
         File file = new File(filePath);
         if (!file.exists()) {
@@ -39,6 +47,7 @@ public class FileIOManager {
             }
         }
 
+        // Use FileWriter to write text to the file in append mode
         try (FileWriter fw = new FileWriter(file, true);
              BufferedWriter bw = new BufferedWriter(fw);
              PrintWriter out = new PrintWriter(bw)) {
