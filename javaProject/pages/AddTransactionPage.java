@@ -1,7 +1,5 @@
 package javaProject.pages;
 
-import javaProject.transactions.OneTimeTransaction;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
