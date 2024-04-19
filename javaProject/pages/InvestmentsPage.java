@@ -1,50 +1,79 @@
 package javaProject.pages;
 
+import javaProject.debug.DebugPrint;
 import javaProject.pages.NormalPage;
+import javaProject.window.WindowHandler;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.Random;
+
+import static java.lang.Math.round;
 
 public class InvestmentsPage extends NormalPage {
 
-    private ArrayList<String> stockPrices;
-    private int currentIndex;
+    private float stockPrice;
+    private Random random;
+    private int stocksOwned;
+
+    private JLabel stocksOwnedLabel;
+
+    private JPanel inputGridPanel;
+
 
     public InvestmentsPage() {
         super("Investments", new FlowLayout());
 
-        stockPrices = new ArrayList<>();
-        // Add some sample stock prices for demonstration
-        stockPrices.add("$100  +10%");
-        stockPrices.add("$120  +20%");
-        stockPrices.add("$90  -10%");
+        random = new Random();
 
-        JPanel inputGridPanel = new JPanel(new GridLayout(3, 1));
+        inputGridPanel = new JPanel(new GridLayout(8, 1));
 
         JLabel InvestmentLabel = new JLabel("Investments:");
 
+        this.stocksOwnedLabel = new JLabel("Stocks owned:" + stocksOwned);
+
         JButton StockButton = new JButton("See current stock prices");
+
+        JButton BuyStockButton = new JButton("Buy a stock at the current price current stock prices");
+
+        JButton SellStockButton = new JButton("Sell a stock at the current stock prices");
+
+        JTextField BuyStockLabel = new JTextField("Enter how many stocks you want to buy");
+
+        JTextField SellStockLabel = new JTextField("Enter how many stocks you want to sell");
 
         JLabel StockLabel = new JLabel("");
 
         inputGridPanel.add(InvestmentLabel);
+        inputGridPanel.add(this.stocksOwnedLabel);
         inputGridPanel.add(StockButton);
         inputGridPanel.add(StockLabel);
+        inputGridPanel.add(BuyStockLabel);
+        inputGridPanel.add(BuyStockButton);
+        inputGridPanel.add(SellStockLabel);
+        inputGridPanel.add(SellStockButton);
         this.jPanel.add(inputGridPanel);
 
         StockButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (currentIndex < stockPrices.size()) {
-                    StockLabel.setText(String.valueOf(stockPrices.get(currentIndex)));
-                    currentIndex++;
-                } else {
-                    // Reset index if reached end of list
-                    currentIndex = 0;
-                }
+                stockPrice = (float) round(random.nextFloat() * 10000) /100;
+                StockLabel.setText(String.valueOf(stockPrice));
+            }
+        });
+        BuyStockButton.addActionListener(e -> {
+            try{
+                stocksOwned += Integer.parseInt(BuyStockLabel.getText());
+                WindowHandler.getInstance().getWindow(0).update();
+                DebugPrint.info("New Stock Count: " + stocksOwned);
+                this.inputGridPanel.remove(this.stocksOwnedLabel);
+                this.stocksOwnedLabel = new JLabel("Stocks Owned: " + stocksOwned);
+                this.inputGridPanel.add(this.stocksOwnedLabel);
+            }
+            catch(Exception a){
+                BuyStockLabel.setText("Please insert a number before buying stocks");
             }
         });
     }
