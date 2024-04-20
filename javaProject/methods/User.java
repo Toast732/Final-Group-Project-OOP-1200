@@ -21,6 +21,8 @@ public class User {
     private final FileIOManager onetimeTransactionManager;
     private final FileIOManager reocurringTransactionManager;
 
+    private final FileIOManager stockManager;
+
     public User(
             String username,
             String password,
@@ -36,9 +38,13 @@ public class User {
         this.email = email;
         this.onetimeTransactionManager = new FileIOManager(username + "_onetimeTransactions");
         this.reocurringTransactionManager = new FileIOManager(username + "_reoccurringTransactions");
+        this.stockManager = new FileIOManager(username + "_stocks");
 
         DebugPrint.info("Reading Transactions");
         this.transactions = this.readTransactions();
+
+        DebugPrint.info("Reading Stocks");
+        this.stockTransactions = this.readStocks();
     }
 
     public String getUsername() {
@@ -153,5 +159,55 @@ public class User {
         } catch (IOException e) {
             System.out.println("Error clearing transactions: " + e.getMessage());
         }
+    }
+
+    // Save stocks
+
+    public void addStock(Stock stock) {
+        stockTransactions.add(stock);
+
+        this.writeStock(stock);
+    }
+
+    public void writeStock(Stock stock) {
+
+        String stockData = String.join("|", stock.stockName, String.valueOf(stock.stockPrice), String.valueOf(stock.numberOfStock), stock.transactionType);
+
+        try {
+            stockManager.appendToFile(stockData); // Append to user file the new user so we don't overwrite who is there already
+        } catch (IOException e) {
+            System.out.println("Error saving stock: " + e.getMessage());
+        }
+    }
+
+    public void clearStocks() {
+        // Clear the stocks
+        stockTransactions.clear();
+    }
+
+    // Read stocks
+    public ArrayList<Stock> readStocks() {
+        List<String> stockLines = stockManager.readFile();
+        for (String line : stockLines) {
+            Stock stock = parseStock(line);
+            if (stock != null) {
+                stockTransactions.add(stock);
+            }
+        }
+        return stockTransactions;
+    }
+
+    private Stock parseStock(String line) {
+        String[] data = line.split("\\|");
+        if (data.length < 4) {
+            DebugPrint.error("Data Incomplete, line " + line);
+            return null; // Stock Data incomplete
+        }
+
+        String stockName = data[0];
+        float stockPrice = Float.parseFloat(data[1]);
+        int numberOfStock = Integer.parseInt(data[2]);
+        String transactionType = data[3];
+        return new Stock(numberOfStock, stockPrice, transactionType, stockName);
     }
 }
