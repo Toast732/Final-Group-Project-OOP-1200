@@ -107,15 +107,9 @@ public class ReportsAndAnalysis extends NormalPage{
 
         JLabel numberOfTransactionsLabel = new JLabel("you have made " + user.stockTransactions.size() + " stock transactions");
 
-        JLabel recentTransactionAmountLabel = new JLabel("you haven't bought or sold any stock");
-
-        JLabel recentTransactionPriceLabel = new JLabel("you haven't bought or sold any stock");
-
         //arrange page elements in proper order
         inputGridPanel.add(investmentLabel);
         inputGridPanel.add(numberOfTransactionsLabel);
-        inputGridPanel.add(recentTransactionAmountLabel);
-        inputGridPanel.add(recentTransactionPriceLabel);
 
         // Create the bar chart, and add it to the dashboard panel.
         this.dashboardPanel.add(this.barChart("Stock Transactions"));
