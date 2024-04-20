@@ -31,7 +31,7 @@ public class RegularTransaction extends Transaction {
     }
 
     @Override
-    public double getAmount(int days) {
+    public double getAmount(double days) {
         return this.dailyAmount * days;
     }
 }
