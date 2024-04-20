@@ -1,2 +1,162 @@
 Final Group Project OOP 1200
 Group members: Liam Matthews, Benjamin Langhammer, Devon O'Brien
+
+The Delibe Bank Personal Finance Manager
+
+
+===Description===
+
+The Personal Finance Manager, brought to you by The Delibe Bank, is a Java-based application designed to help
+individuals manage their finances. It offers a user-friendly interface to track income, expenses, and investments,
+helping users make better financial decisions.
+Through this application we offer...
+ _______________________________________________________________________
+|                              FEATURES                                 |
+
+** User Authentication **
+- A simple login with Username and Password, able to support and assist multiple users! Transaction data is stored
+ based on your Username so your data will be waiting for you when you come back!
+
+
+**Finance Dashboard**
+- View at a glance your budget with graph(s) detailing your income VS expenses.
+
+
+**Transaction Manager**
+- Store your income and expenses inside the application and view them later is Transaction History.
+
+
+**Budgeting**
+- With your transactions you can track where your money has gone and make positive financial decisions.
+
+
+**Investments**
+- See how the stock market suits your needs with simulated stock prices. NOTE Stock prices are a randomized value only
+to be used as a demo of what can be considered
+
+ _______________________________________________________________________
+|                              INSTALLATION                             |
+
+Prerequisites:
+
+    Java JDK 11 or newer
+    IntelliJ IDEA or any Java IDE
+    JFreeChart - https://www.jfree.org/jfreechart/
+
+Clone the repository:
+
+bash
+
+git clone https://github.com/Toast732/Final-Group-Project-OOP-1200.git
+
+Open the project in your Java IDE..
+Run the main method in the Main.java class.
+
+
+
+ _______________________________________________________________________
+|                              HOW TO USE                               |
+
+
+To use the Delibe Bank Personal Finance Manager, start by registering a new user account through the Register tab
+located in the top left corner next to login. Once registered you will recieve confirmation and be directed to log in
+with your credentials to access the dashboard.
+
+Once on the Dashboard you might notice it is a little empty. You first need to add some transactions to view your data.
+
+Adding Transactions:
+- Navigate up to the tabs and click on 'Add Income'. At the top of the window below the navigation tabs, there is a
+dropdown list where you select what type of income you will record.
+
+    One-Time
+    - Perfect for when you manage to sell off an asset for quick cash. Record the name of the one-time income followed
+    by how much you earned.
+
+    Hourly
+    - List your Income Source (work, business, etc), how many hours you worked that week, and how much per hour you
+     earned.
+
+    Yearly
+    - Record the name of the source of income (ex. Salary pay) and how much it was worth for the year. Perfect for
+    those large sources of income you need to better plan use for.
+
+Fill in the necessary details and click save. This will save your income transaction details in a file listed with
+your username.
+
+To save an expense, click on 'Add Expense' and fill in the similar details to income and then click save. With these
+values, the graph(s) will populate on the Dashboard with your data.
+
+Edit Transaction:
+- Navigate to the 'Edit Transactions' tab and view the saved transactions. Use the scroll bar to navigate the available
+transactions. If you wish to remove a transaction made in error, simply click the button found right of the transaction
+details labelled 'Delete Transaction' and then click 'Save' on the right side of the window.
+
+Investments
+-Provides a way to practice your Stock skills with a randomized Stock price. Buy or sell and name the stock you
+wish to interact with.
+
+Dashboard
+- Now that we have populated some transactions there should be a pie chart displaying in the center of the screen. The
+options on the top left of the Monthly Balance Report help you break down what is displayed in the window.
+
+    Gross Profit
+    - Overall view of your expenses and income
+
+    Income
+    - A breakdown of what income you have recorded
+
+    Expenses
+    - A breakdown of what expenses you have recorded
+
+You may also right click on the graphs to see a dropdown of multiple options.
+
+    Properties
+    - A properties windows will appear and offer you multiple options to better represent your data.
+    On  the title tab you can...
+
+        pick the text used as the title of the graph,
+        pick the font and colour,
+        and an additional option to toggle the title message.
+
+    On plot you can...
+
+        Change the appearence of the graph and graph lines
+        manipulate the data on the pic chart.
+
+    And the Other tab allows you to customize your graph further.
+
+
+    Copy
+    - Copy the graph onto the cache to paste elsewhere
+
+    Save As
+    - Store the graph as an image (PNG) onto your desktop
+
+    Print
+    - Send a print request to have the graph printed from your printer.
+
+    Zoom In/Out
+    - Focus on select parts of the graph you require more detail in. Zoom in gets you closer, Zoom out pulls you
+    farther away
+
+    AutoRange
+    - property defines how the axis autoranges when data is added. AxisCore.AutoRange = AutoRange.Once (Default Setting)
+     The axis will attempt to autorange once to fit the data as you start the chart. Setting an explicit VisibleRange
+      on the axis will override this behaviour.
+
+
+Report and Analysis
+-A recap of the stock you have bought and sold. A refresh button is located to the left of the image to ensure
+the info displayed is up to date.
+
+Logout
+- Click here to end your session and return to the Login/Register page.
+
+ ______________________________________________________________________
+|                           TROUBLESHOOTING                            |
+
+In the case of the project not running, please double check that
+
+- Java is installed
+- JDK is installed and correctly added into the IDE
+- Ensure you have installed the jar file for "jFreeChart"
