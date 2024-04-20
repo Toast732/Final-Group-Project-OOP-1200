@@ -56,4 +56,21 @@ public class FileIOManager {
             throw new IOException("Failed to write to file: " + filePath, e);
         }
     }
+
+    // Clears the contents of the file (Does not delete the file completely)
+    public void clearFile() throws IOException {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            throw new IOException("File does not exist: " + filePath);
+        }
+
+        // Use FileWriter to write text to the file in append mode
+        try (FileWriter fw = new FileWriter(file, false);
+             BufferedWriter bw = new BufferedWriter(fw);
+             PrintWriter out = new PrintWriter(bw)) {
+            out.print("");
+        } catch (IOException e) {
+            throw new IOException("Failed to clear file: " + filePath, e);
+        }
+    }
 }

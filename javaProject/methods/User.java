@@ -135,4 +135,23 @@ public class User {
 
         return transaction;
     }
+
+    public void clearTransactions() {
+        // Clear the transactions
+        transactions.clear();
+
+        // Clear one time transactions
+        this.clearTransaction(onetimeTransactionManager);
+
+        // Clear reocurring transactions
+        this.clearTransaction(reocurringTransactionManager);
+    }
+
+    private void clearTransaction(FileIOManager fileIOManager) {
+        try {
+            fileIOManager.clearFile();
+        } catch (IOException e) {
+            System.out.println("Error clearing transactions: " + e.getMessage());
+        }
+    }
 }

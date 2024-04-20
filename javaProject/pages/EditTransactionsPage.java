@@ -3,14 +3,17 @@ package javaProject.pages;
 import javaProject.accounts.users.UserHandler;
 import javaProject.external.table.ButtonColumn;
 import javaProject.methods.User;
+import javaProject.pageSegments.PopupSegment;
+import javaProject.transactions.OneTimeTransaction;
 import javaProject.transactions.RegularTransaction;
 import javaProject.transactions.Transaction;
+import javaProject.window.WindowHandler;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 public class EditTransactionsPage extends NormalPage {
 
@@ -51,12 +54,6 @@ public class EditTransactionsPage extends NormalPage {
         // Create the list of titles.
         String[] titles = {"Name", "Income/Expense", "Reoccurring", "Amount (Per Day)", "Delete"};
 
-        // Populate the title row.
-        //grid.add(this.createTitleLabel("Transaction Name"));
-        //grid.add(this.createTitleLabel(" Income/Expense "));
-        //grid.add(this.createTitleLabel(" Is Reoccurring?"));
-        //grid.add(this.createTitleLabel("Amount (Per Day)"));
-
         // Create the list of fields.
         String[][] fields = new String[user.transactions.size()][5];
 
@@ -93,20 +90,21 @@ public class EditTransactionsPage extends NormalPage {
 
         table.setPreferredSize(new Dimension(1920, 1080));
 
+        // Make the table sortable.
+        table.setAutoCreateRowSorter(true);
+
         // Add the table to the grid.
         JScrollPane scrollPane = new JScrollPane(table);
 
         // Adapted From: https://tips4java.wordpress.com/2009/07/12/table-button-column/
         Action delete = new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                JTable table = (JTable) e.getSource();
                 int modelRow = Integer.parseInt(e.getActionCommand());
                 model.removeRow(modelRow);
             }
         };
 
-        ButtonColumn buttonColumn = new ButtonColumn(table, delete, 4);
-        buttonColumn.setMnemonic(KeyEvent.VK_D);
+        new ButtonColumn(table, delete, 4);
 
         // Get the screen's size.
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -131,47 +129,86 @@ public class EditTransactionsPage extends NormalPage {
 
         // Add an action listener to the save button.
         saveButton.addActionListener(e -> {
-            // Clear the transactions.
-            user.transactions.clear();
 
-            // Iterate through all the rows in the table.
-            for (int i = 0; i < table.getRowCount(); i++) {
-                // Get the transaction name.
-                String transactionName = (String) table.getValueAt(i, 0);
+            // Save the transactions before the edits.
+            ArrayList<Transaction> transactionsBackup = new ArrayList<>(user.transactions);
 
-                // Get the transaction type.
-                String transactionType = (String) table.getValueAt(i, 1);
+            try {
+                // Clear the transactions.
+                user.clearTransactions();
 
-                // Get the transaction amount.
-                double transactionAmount = Double.parseDouble((String) table.getValueAt(i, 3));
+                // Iterate through all the rows in the table.
+                for (int i = 0; i < table.getRowCount(); i++) {
+                    // Get the transaction name.
+                    String transactionName = (String) table.getValueAt(i, 0);
 
-                // If the transaction type is an expense, make the amount negative.
-                if (transactionType.equals("Expense")) {
-                    transactionAmount = -transactionAmount;
-                }
+                    // Get the transaction type.
+                    String transactionType = (String) table.getValueAt(i, 1);
 
-                // If the transaction is reoccurring, create a regular transaction.
-                if (table.getValueAt(i, 2).equals("Yes")) {
-                    // Create the regular transaction.
-                    //RegularTransaction regularTransaction = new RegularTransaction(transactionName, transactionType, transactionAmount);
+                    // Get the reoccurring status.
+                    String reoccurring = (String) table.getValueAt(i, 2);
+
+                    // Get the transaction amount.
+                    double transactionAmount = Double.parseDouble((String) table.getValueAt(i, 3));
+
+                    // If the transaction type is an expense, make the amount negative.
+                    if (transactionType.equals("Expense")) {
+                        transactionAmount = -transactionAmount;
+                    }
+
+                    // If the transaction is reoccurring, create a regular transaction.
+                    if (reoccurring.equals("Yes")) {
+                        // Create the regular transaction.
+                        RegularTransaction regularTransaction = new RegularTransaction(transactionName);
+
+                        // Set the amount.
+                        regularTransaction.setDaily(transactionAmount);
+
+                        // Add the transaction to the user.
+                        user.addTransaction(regularTransaction);
+
+                        // Continue to the next iteration.
+                        continue;
+                    }
+
+                    // Otherwise, this is a one-time transaction.
+
+                    // Create the transaction.
+                    OneTimeTransaction transaction = new OneTimeTransaction(transactionName);
+
+                    // Set the amount.
+                    transaction.setAmount(transactionAmount);
 
                     // Add the transaction to the user.
-                    //user.addTransaction(regularTransaction);
-
-                    // Continue to the next iteration.
-                    //continue;
+                    user.addTransaction(transaction);
                 }
 
-                // Create the transaction.
-                //Transaction transaction = new Transaction(transactionName, transactionType, transactionAmount);
+                // Refresh the page.
+                refresh();
 
-                // Add the transaction to the user.
-                //user.addTransaction(transaction);
+                // Update the window
+                WindowHandler.getInstance().getWindow(0).update();
+
+                // Show a success message.
+                JOptionPane.showMessageDialog(saveButton, "Transactions saved successfully.");
+            } catch (Exception ex) {
+                // If there is an exception, restore the transactions.
+
+                // Clear the transactions.
+                user.clearTransactions();
+
+                // Write them back one by one.
+                for (Transaction transaction : transactionsBackup) {
+                    user.addTransaction(transaction);
+                }
+
+                // Show an error message.
+                new PopupSegment(
+                        "Error",
+                        "Error saving transactions. Please ensure all fields are valid.",
+                        true
+                );
             }
         });
-    }
-
-    public void actionPerformed(ActionEvent e) {
-
     }
 }
