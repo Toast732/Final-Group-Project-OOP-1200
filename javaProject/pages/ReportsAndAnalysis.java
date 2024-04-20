@@ -74,8 +74,8 @@ public class ReportsAndAnalysis extends NormalPage{
                 // Get the stock
                 Stock stock = stocks.get(stock_index);
                 //add two bars to the graph
-                dataset.addValue(stock.stockPrice, stock.transactionType, stock.stockName+": Cost");
-                dataset.addValue(stock.numberOfStock, stock.transactionType, stock.stockName+": number purchased");
+                dataset.addValue(stock.stockPrice, stock.transactionType, stock.stockName + " : Cost");
+                dataset.addValue(stock.numberOfStock, stock.transactionType, stock.stockName + " : Stock Purchased");
             }
         }
 

@@ -9,9 +9,10 @@ public class OneTimeTransaction extends Transaction{
     }
 
     @Override
-    public double getAmount(int days) {
+    public double getAmount(double days) {
         return this.singleAmount;
     }
+
     public void setAmount(Double amount){
         this.singleAmount = amount;
         if (this.singleAmount >= 0) {
@@ -20,6 +21,7 @@ public class OneTimeTransaction extends Transaction{
             this.transactionType = "Expense";
         }
     }
+
     public void setTitle(String name){
         this.transactionName = name;
     }
