@@ -79,6 +79,10 @@ public class DashboardPage extends NormalPage {
             DebugPrint.info("Transaction: " + transaction.transactionName + " Amount: " + amount);
         }
 
+        JLabel balanceLabel = new JLabel("Balance "+String.valueOf(Math.round((runningIncome - runningExpenses)* 100)/100.0));
+
+        this.dashboardPanel.add(balanceLabel);
+
         // Create a pie chart of the income via JFreeChart.
         JFreeChart incomeChart = ChartFactory.createPieChart("Income (Last 30 days)", createIncomeDataset(user), true, true, false);
 

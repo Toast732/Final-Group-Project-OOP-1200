@@ -3,8 +3,8 @@ package javaProject.pages;
 import javaProject.accounts.users.UserHandler;
 import javaProject.debug.DebugPrint;
 import javaProject.methods.User;
+import javaProject.pageSegments.PopupSegment;
 import javaProject.stocks.Stock;
-import javaProject.window.WindowHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +12,6 @@ import java.awt.*;
 public class InvestmentsPage extends NormalPage {
     //initiate variables
     private float stockPrice;
-
 
     private int stocksOwned;
 
@@ -22,91 +21,128 @@ public class InvestmentsPage extends NormalPage {
 
     private String stockName;
 
-
     public InvestmentsPage() {
-        super("Investments", new FlowLayout());
+        super("Manage Buying & Selling Stocks", new FlowLayout());
         //create page elements
 
-        inputGridPanel = new JPanel(new GridLayout(9, 1));
+        inputGridPanel = new JPanel(new GridLayout(0, 2));
 
-        JLabel InvestmentLabel = new JLabel("Investments:");
+        // Get the total stocks owned.
+        User user = UserHandler.getInstance().getUser();
+
+        for (int i = 0; i < user.stockTransactions.size(); i++) {
+            Stock stock = user.stockTransactions.get(i);
+            if (stock.transactionType.equals("Buy")) {
+                stocksOwned += stock.numberOfStock;
+            } else {
+                stocksOwned -= stock.numberOfStock;
+            }
+        }
 
         this.stocksOwnedLabel = new JLabel("Stocks owned:" + stocksOwned);
 
-        JTextField StockButton = new JTextField("See current stock prices");
+        // Create a field to input the stock name
+        JLabel stockNameLabel = new JLabel("Stock Name");
 
-        JButton BuyStockButton = new JButton("Buy a stock at the current price current stock prices");
+        // Create a field to input the stock name
+        JTextField stockNameField = new JTextField(32);
 
-        JButton SellStockButton = new JButton("Sell a stock at the current stock prices");
+        // Create a field to input the stock price
+        JLabel StockLabel = new JLabel("Stock Price");
 
-        JTextField BuyStockLabel = new JTextField("Enter how many stocks you want to buy");
+        // Create a field to input the stock price
+        JTextField StockButton = new JTextField(32);
 
-        JTextField SellStockLabel = new JTextField("Enter how many stocks you want to sell");
+        // Create a field to input the number of stocks to buy
+        JLabel InputCountLabel = new JLabel("Number of Stocks to Buy/Sell");
 
-        JTextField StockNameLabel = new JTextField("Enter the name of the stock");
+        // Create a field to input the number of stocks to sell
+        JTextField InputCountField = new JTextField(32);
 
-        JLabel StockLabel = new JLabel("");
+        // Create a button to buy stocks
+        JButton BuyStockButton = new JButton("Buy Stocks");
+
+        // Create a button to sell stocks
+        JButton SellStockButton = new JButton("Sell Stocks");
 
         //add page elements to panel
-        inputGridPanel.add(InvestmentLabel);
-        inputGridPanel.add(StockButton);
-        inputGridPanel.add(StockLabel);
-        inputGridPanel.add(StockNameLabel);
-        inputGridPanel.add(BuyStockLabel);
-        inputGridPanel.add(BuyStockButton);
-        inputGridPanel.add(SellStockLabel);
-        inputGridPanel.add(SellStockButton);
-        inputGridPanel.add(this.stocksOwnedLabel);
+        this.inputGridPanel.add(stockNameLabel);
+        this.inputGridPanel.add(stockNameField);
+        this.inputGridPanel.add(StockLabel);
+        this.inputGridPanel.add(StockButton);
+        this.inputGridPanel.add(InputCountLabel);
+        this.inputGridPanel.add(InputCountField);
+        this.inputGridPanel.add(BuyStockButton);
+        this.inputGridPanel.add(SellStockButton);
+        this.inputGridPanel.add(this.stocksOwnedLabel);
         this.jPanel.add(inputGridPanel);
 
-        //add event listener for when buy stock button is pressed
+        //add action listeners to buttons
         BuyStockButton.addActionListener(e -> {
-            try{
-                if (0 > Integer.parseInt(BuyStockLabel.getText())){
-                    throw new Exception();
-                }
-                if (0 > Float.parseFloat(StockButton.getText())){
-                    throw new Exception();
-                }
-                stockPrice = Float.parseFloat(StockButton.getText());
-                StockLabel.setText("$" + stockPrice);
-                Stock purchase = new Stock(Integer.parseInt(BuyStockLabel.getText()), stockPrice, "bought", StockNameLabel.getText());
-                User user = UserHandler.getInstance().getUser();
-                user.stockTransactions.add(purchase);
-                stocksOwned += Integer.parseInt(BuyStockLabel.getText());
-                WindowHandler.getInstance().getWindow(0).update();
-                DebugPrint.info("New Stock Count: " + stocksOwned);
-                this.inputGridPanel.remove(this.stocksOwnedLabel);
-                this.stocksOwnedLabel = new JLabel("Stocks Owned: " + stocksOwned);
-                this.inputGridPanel.add(this.stocksOwnedLabel);
 
-            }
-            catch(Exception a){
-                BuyStockLabel.setText("Please insert a number before buying stocks");
+            try {
+
+                // Get the amount to buy.
+                int amountToBuy = Integer.parseInt(InputCountField.getText());
+                //get the stock name
+                stockName = stockNameField.getText();
+                //get the stock price
+                stockPrice = Float.parseFloat(StockButton.getText());
+                //get the number of stocks to buy
+                stocksOwned += amountToBuy;
+                //update the stocks owned label
+                this.stocksOwnedLabel.setText("Stocks owned:" + stocksOwned);
+                //add the stock to the user's stock list
+                UserHandler.getInstance().getUser().addStock(new Stock(amountToBuy, stockPrice, "Buy", stockName));
+            } catch (NumberFormatException ex) {
+                DebugPrint.error("Error parsing stock price: " + ex.getMessage());
+                new PopupSegment("Error", "Please make sure all fields have valid inputs.", true);
             }
         });
-        //add event listener for when sell stock button is clicked
+
         SellStockButton.addActionListener(e -> {
-            try{
-                if (stocksOwned < Integer.parseInt(SellStockLabel.getText())){
-                    throw new Exception();
+            try {
+
+                //get the stock name
+                stockName = stockNameField.getText();
+
+                // See if they have enough of this stock
+                int amountOfThisStock = 0;
+
+                for (int i = 0; i < user.stockTransactions.size(); i++) {
+                    Stock stock = user.stockTransactions.get(i);
+
+                    // If this stock is the desired type, and the stock was bought, add it to the total.
+                    if (stock.stockName.equals(stockName) && stock.transactionType.equals("Buy")) {
+                        amountOfThisStock += stock.numberOfStock;
+                    } else if (stock.stockName.equals(stockName) && stock.transactionType.equals("Sell")) {
+                        amountOfThisStock -= stock.numberOfStock;
+                    }
                 }
-                if (0 > Integer.parseInt(SellStockLabel.getText())){
-                    throw new Exception();
+
+                DebugPrint.info("Amount of this stock: " + amountOfThisStock);
+
+                // Get the amount stock they want to sell.
+                int amountToSell = Integer.parseInt(InputCountField.getText());
+
+                if (amountOfThisStock < amountToSell) {
+                    new PopupSegment("Error", "You do not have enough of this stock to sell.", true);
+                    return;
                 }
-                Stock sell = new Stock(Integer.parseInt(SellStockLabel.getText()), stockPrice, "sold", StockNameLabel.getText());
-                User user = UserHandler.getInstance().getUser();
-                user.stockTransactions.add(sell);
-                stocksOwned -= Integer.parseInt(SellStockLabel.getText());
-                WindowHandler.getInstance().getWindow(0).update();
-                DebugPrint.info("New Stock Count: " + stocksOwned);
-                this.inputGridPanel.remove(this.stocksOwnedLabel);
-                this.stocksOwnedLabel = new JLabel("Stocks Owned: " + stocksOwned);
-                this.inputGridPanel.add(this.stocksOwnedLabel);
-            }
-            catch(Exception a){
-                BuyStockLabel.setText("Please insert a number before selling stocks");
+
+                //get the stock price
+                stockPrice = Float.parseFloat(StockButton.getText());
+                //get the number of stocks to sell
+                stocksOwned -= amountToSell;
+                //update the stocks owned label
+                this.stocksOwnedLabel.setText("Stocks owned:" + stocksOwned);
+                //add the stock to the user's stock list
+                UserHandler.getInstance().getUser().addStock(new Stock(amountToSell, stockPrice, "Sell", stockName));
+            } catch (Exception ex) {
+                DebugPrint.error("Error parsing stock price: " + ex.getMessage());
+                new PopupSegment("Error", "Please make sure all fields have valid inputs.", true);
             }
         });
+
     }
 }
