@@ -8,7 +8,7 @@ import javaProject.window.WindowHandler;
 public class Main {
 
     // Store the name of the bank.
-    static final String bankName = "Delibe Bank";
+    static final String bankName = "Delibe Financial Manager";
 
     static final WindowHandler windowHandler = WindowHandler.getInstance();
 

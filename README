@@ -42,6 +42,7 @@ Prerequisites:
     Java JDK 11 or newer
     IntelliJ IDEA or any Java IDE
     JFreeChart - https://www.jfree.org/jfreechart/
+    (Jar file included in the project under a folder named "external jars")
 
 Clone the repository:
 
@@ -51,8 +52,6 @@ git clone https://github.com/Toast732/Final-Group-Project-OOP-1200.git
 
 Open the project in your Java IDE..
 Run the main method in the Main.java class.
-
-
 
  _______________________________________________________________________
 |                              HOW TO USE                               |
@@ -160,3 +159,14 @@ In the case of the project not running, please double check that
 - Java is installed
 - JDK is installed and correctly added into the IDE
 - Ensure you have installed the jar file for "jFreeChart"
+
+
+ ______________________________________________________________________
+|                           TROUBLESHOOTING                            |
+
+DEMO USAGE:
+To demo it's usage, you can create a new account, or the already included account - bobish
+- Username: bobish
+- Password: pencil
+
+However, you can still create accounts as you wish.
