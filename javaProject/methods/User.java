@@ -29,7 +29,6 @@ public class User {
             String name,
             String familyName,
             String email
-
     ) {
         this.username = username;
         this.password = password;
@@ -180,11 +179,6 @@ public class User {
         }
     }
 
-    public void clearStocks() {
-        // Clear the stocks
-        stockTransactions.clear();
-    }
-
     // Read stocks
     public ArrayList<Stock> readStocks() {
         List<String> stockLines = stockManager.readFile();
@@ -209,5 +203,15 @@ public class User {
         int numberOfStock = Integer.parseInt(data[2]);
         String transactionType = data[3];
         return new Stock(numberOfStock, stockPrice, transactionType, stockName);
+    }
+
+    public void delete() {
+        try {
+            onetimeTransactionManager.deleteFile();
+            reocurringTransactionManager.deleteFile();
+            stockManager.deleteFile();
+        } catch (IOException e) {
+            System.out.println("Error clearing transactions: " + e.getMessage());
+        }
     }
 }

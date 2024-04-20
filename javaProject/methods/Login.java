@@ -1,7 +1,9 @@
 package javaProject.methods;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 //Authentication of login and registration
 public class Login {
@@ -52,6 +54,30 @@ public class Login {
                 } catch (Exception e) {
                     System.out.println("Error retrieving user data: " + e.getMessage());
                 }
+            }
+        }
+    }
+
+    // Used to delete a user.
+    public void deleteUser(String username) {
+
+        // Remove the user from the database.
+        userDatabase.remove(username);
+
+        // Clear the file.
+        try {
+            fileManager.clearFile();
+        } catch (IOException e) {
+            System.out.println("Error clearing file: " + e.getMessage());
+        }
+
+        // Write the users back to the file.
+        for (User user : userDatabase.values()) {
+            String userData = String.join("|", user.getUsername(), user.getPassword(), user.getName(), user.getFamilyName(), user.getEmail());
+            try {
+                fileManager.appendToFile(userData);
+            } catch (IOException e) {
+                System.out.println("Error saving user: " + e.getMessage());
             }
         }
     }

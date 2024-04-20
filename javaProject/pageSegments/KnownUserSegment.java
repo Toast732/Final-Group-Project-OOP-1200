@@ -33,5 +33,6 @@ public class KnownUserSegment extends PageSegment {
         super.addPage(new InvestmentsPage());
         super.addPage(new TransactionHistory());
         super.addPage(new ReportsAndAnalysis(super.jTabbedPane));
+        super.addPage(new DeleteUserPage());
     }
 }

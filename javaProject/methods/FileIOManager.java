@@ -73,4 +73,19 @@ public class FileIOManager {
             throw new IOException("Failed to clear file: " + filePath, e);
         }
     }
+
+    // Deletes a file
+    public void deleteFile() throws IOException {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            throw new IOException("File does not exist: " + filePath);
+        }
+
+        // Use FileWriter to write text to the file in append mode
+        try {
+            file.delete();
+        } catch (Exception e) {
+            throw new IOException("Failed to delete file: " + filePath, e);
+        }
+    }
 }
