@@ -19,47 +19,22 @@ import java.util.Map;
 public class ReportsAndAnalysis extends NormalPage{
 
     private JPanel dashboardPanel;
-    private float currentPrice;
-    private int currentSaleAmount;
-    private String currentType;
-    private String currentName;
 
-    public ReportsAndAnalysis() {
+    public ReportsAndAnalysis(JTabbedPane jTabbedPane) {
         super("Report and Analysis", new FlowLayout());
-        //create page elements
-        User user = UserHandler.getInstance().getUser();
 
-        JPanel inputGridPanel = new JPanel(new GridLayout(9, 1));
+        // Refresh the page
+        this.refresh();
 
-        JLabel investmentLabel = new JLabel("Investment statement");
-
-        JLabel numberOfTransactionsLabel = new JLabel("you have made " + user.stockTransactions.size() + " stock transactions");
-
-        JLabel recentTransactionAmountLabel = new JLabel("you haven't bought or sold any stock");
-
-        JLabel recentTransactionPriceLabel = new JLabel("you haven't bought or sold any stock");
-
-        JButton refreshButton = new JButton("Refresh page");
-
-        //arrange page elements in proper order
-        inputGridPanel.add(investmentLabel);
-        inputGridPanel.add(numberOfTransactionsLabel);
-        inputGridPanel.add(recentTransactionAmountLabel);
-        inputGridPanel.add(recentTransactionPriceLabel);
-        inputGridPanel.add(refreshButton);
-        this.jPanel.add(inputGridPanel);
-
-        //refresh button event listener
-        refreshButton.addActionListener(e -> {
-            numberOfTransactionsLabel.setText("you have made " + user.stockTransactions.size() + " stock transactions");
-            recentTransactionAmountLabel.setText("you last " + user.stockTransactions.getLast().transactionType +" "+ user.stockTransactions.getLast().numberOfStock + " stock");
-            recentTransactionPriceLabel.setText("you last " + user.stockTransactions.getLast().transactionType +" for "+ user.stockTransactions.getLast().stockPrice + " dollars");
-            this.barChart("Yes");
+        jTabbedPane.addChangeListener(e -> {
+            if (jTabbedPane.getSelectedComponent() == this.jPanel) {
+                refresh();
+            }
         });
 
     }
     //create an empty graph
-    public void barChart(String chartTitle) {
+    public ChartPanel barChart(String chartTitle) {
         JFreeChart barChart = ChartFactory.createBarChart(
                 chartTitle,
                 "Transactions",
@@ -70,7 +45,8 @@ public class ReportsAndAnalysis extends NormalPage{
 
         ChartPanel chartPanel = new ChartPanel( barChart );
         chartPanel.setPreferredSize(new Dimension( 560 , 367 ) );
-        this.jPanel.add(chartPanel);
+
+        return chartPanel;
     }
 
     private CategoryDataset createDataset( ) {
@@ -82,12 +58,8 @@ public class ReportsAndAnalysis extends NormalPage{
 
         for (int i = 0; i < user.stockTransactions.size(); i++) {
             Stock stock = user.stockTransactions.get(i);
-            this.currentPrice = user.stockTransactions.get(i).stockPrice;
-            this.currentSaleAmount = user.stockTransactions.get(i).numberOfStock;
-            this.currentType = user.stockTransactions.get(i).transactionType;
-            this.currentName = user.stockTransactions.get(i).stockName;
 
-            final String first = this.currentName;
+            final String first = stock.stockName;
 
             if(!splitStocks.containsKey(first)){
                 splitStocks.put(first, new ArrayList<>());
@@ -108,5 +80,44 @@ public class ReportsAndAnalysis extends NormalPage{
         }
 
         return dataset;
+    }
+
+    private void refresh() {
+
+        // If the dashboard panel is not null, remove it.
+        if (this.dashboardPanel != null) {
+            this.jPanel.remove(this.dashboardPanel);
+        }
+
+        // Create a new dashboard panel.
+        this.dashboardPanel = new JPanel();
+
+        // Add the dashboard panel to the main panel.
+        this.jPanel.add(this.dashboardPanel);
+
+        //create page elements
+        User user = UserHandler.getInstance().getUser();
+
+        JPanel inputGridPanel = new JPanel(new GridLayout(9, 1));
+
+        // Add the grid to the dashboard panel
+        this.dashboardPanel.add(inputGridPanel);
+
+        JLabel investmentLabel = new JLabel("Investment statement");
+
+        JLabel numberOfTransactionsLabel = new JLabel("you have made " + user.stockTransactions.size() + " stock transactions");
+
+        JLabel recentTransactionAmountLabel = new JLabel("you haven't bought or sold any stock");
+
+        JLabel recentTransactionPriceLabel = new JLabel("you haven't bought or sold any stock");
+
+        //arrange page elements in proper order
+        inputGridPanel.add(investmentLabel);
+        inputGridPanel.add(numberOfTransactionsLabel);
+        inputGridPanel.add(recentTransactionAmountLabel);
+        inputGridPanel.add(recentTransactionPriceLabel);
+
+        // Create the bar chart, and add it to the dashboard panel.
+        this.dashboardPanel.add(this.barChart("Stock Transactions"));
     }
 }

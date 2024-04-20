@@ -54,12 +54,6 @@ public class EditTransactionsPage extends NormalPage {
         // Create the list of titles.
         String[] titles = {"Name", "Income/Expense", "Reoccurring", "Amount (Per Day)", "Delete"};
 
-        // Populate the title row.
-        //grid.add(this.createTitleLabel("Transaction Name"));
-        //grid.add(this.createTitleLabel(" Income/Expense "));
-        //grid.add(this.createTitleLabel(" Is Reoccurring?"));
-        //grid.add(this.createTitleLabel("Amount (Per Day)"));
-
         // Create the list of fields.
         String[][] fields = new String[user.transactions.size()][5];
 
