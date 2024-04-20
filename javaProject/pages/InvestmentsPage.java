@@ -8,17 +8,11 @@ import javaProject.window.WindowHandler;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Random;
-
-import static java.lang.Math.round;
 
 public class InvestmentsPage extends NormalPage {
     //initiate variables
     private float stockPrice;
 
-    private final Random random;
 
     private int stocksOwned;
 
@@ -32,7 +26,6 @@ public class InvestmentsPage extends NormalPage {
     public InvestmentsPage() {
         super("Investments", new FlowLayout());
         //create page elements
-        random = new Random();
 
         inputGridPanel = new JPanel(new GridLayout(9, 1));
 
@@ -40,7 +33,7 @@ public class InvestmentsPage extends NormalPage {
 
         this.stocksOwnedLabel = new JLabel("Stocks owned:" + stocksOwned);
 
-        JButton StockButton = new JButton("See current stock prices");
+        JTextField StockButton = new JTextField("See current stock prices");
 
         JButton BuyStockButton = new JButton("Buy a stock at the current price current stock prices");
 
@@ -66,20 +59,17 @@ public class InvestmentsPage extends NormalPage {
         inputGridPanel.add(this.stocksOwnedLabel);
         this.jPanel.add(inputGridPanel);
 
-        //create event listener that randomizes stock price
-        StockButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                stockPrice = (float) round(random.nextFloat() * 10000) /100;
-                StockLabel.setText("$" + String.valueOf(stockPrice));
-            }
-        });
         //add event listener for when buy stock button is pressed
         BuyStockButton.addActionListener(e -> {
             try{
                 if (0 > Integer.parseInt(BuyStockLabel.getText())){
                     throw new Exception();
                 }
+                if (0 > Float.parseFloat(StockButton.getText())){
+                    throw new Exception();
+                }
+                stockPrice = Float.parseFloat(StockButton.getText());
+                StockLabel.setText("$" + stockPrice);
                 Stock purchase = new Stock(Integer.parseInt(BuyStockLabel.getText()), stockPrice, "bought", StockNameLabel.getText());
                 User user = UserHandler.getInstance().getUser();
                 user.stockTransactions.add(purchase);
