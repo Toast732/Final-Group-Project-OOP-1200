@@ -36,9 +36,9 @@ public class User {
         this.name = name;
         this.familyName = familyName;
         this.email = email;
-        this.onetimeTransactionManager = new FileIOManager(username + "_onetimeTransactions");
-        this.reocurringTransactionManager = new FileIOManager(username + "_reoccurringTransactions");
-        this.stockManager = new FileIOManager(username + "_stocks");
+        this.onetimeTransactionManager = new FileIOManager(username + "_onetimeTransactions.csv");
+        this.reocurringTransactionManager = new FileIOManager(username + "_reoccurringTransactions.csv");
+        this.stockManager = new FileIOManager(username + "_stocks.csv");
 
         DebugPrint.info("Reading Transactions");
         this.transactions = this.readTransactions();
