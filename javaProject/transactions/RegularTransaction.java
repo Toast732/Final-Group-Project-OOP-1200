@@ -26,6 +26,10 @@ public class RegularTransaction extends Transaction {
         this.setDailyAmount(hourlyRate * hoursWorkedAWeek / 7);
     }
 
+    public void setDaily(double dailyAmount){
+        this.setDailyAmount(dailyAmount);
+    }
+
     @Override
     public double getAmount(int days) {
         return this.dailyAmount * days;
