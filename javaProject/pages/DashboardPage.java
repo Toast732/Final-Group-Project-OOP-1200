@@ -7,9 +7,8 @@ import javaProject.transactions.Transaction;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.data.general.PieDataset;
 
 import javax.swing.*;
 import java.util.Objects;
@@ -65,7 +64,7 @@ public class DashboardPage extends NormalPage {
             // Add the amount to the running total.
             // If the type is an expense, add it to the running expenses.
             if (Objects.equals(transaction.transactionType, "Expense")) {
-                runningExpenses += amount;
+                runningExpenses += Math.abs(amount);
             } else {
                 // If the type is an income, add it to the running income.
                 runningIncome += amount;
@@ -75,23 +74,31 @@ public class DashboardPage extends NormalPage {
         }
 
         // Create a barchart via JFreeChart with the running expenses and income.
-        JFreeChart barChart = ChartFactory.createBarChart("Monthly Balance Report", "Type", "Amount", createDataset(runningExpenses, runningIncome), PlotOrientation.VERTICAL, true, true, false);
+        JFreeChart barChart = ChartFactory.createPieChart("Monthly Balance Report", createDataset(runningExpenses, runningIncome), true, true, false);
 
-        // Create a chart panel with the barchart.
+        // Create a chart panel to display the chart.
         ChartPanel chartPanel = new ChartPanel(barChart);
 
         // Add the chart panel to the dashboard panel.
         this.dashboardPanel.add(chartPanel);
 
-        // Add the dashboard panel to the page.
+        // Add the dashboard panel to the main panel.
         this.jPanel.add(this.dashboardPanel);
     }
 
-    private CategoryDataset createDataset(double runningExpenses, double runningIncome) {
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+    private PieDataset<String> createDataset(double runningExpenses, double runningIncome) {
+        DefaultPieDataset<String> dataset = new DefaultPieDataset<>();
 
-        dataset.addValue(-runningExpenses, "Expenses", "Expenses");
-        dataset.addValue(runningIncome, "Income", "Income");
+        if (runningExpenses > 0) {
+            dataset.setValue("Expenses", runningExpenses);
+        }
+
+        // Get the gross profit.
+        double grossProfit = runningIncome - runningExpenses;
+
+        if (grossProfit > 0) {
+            dataset.setValue("Gross Profit", grossProfit);
+        }
 
         return dataset;
     }
