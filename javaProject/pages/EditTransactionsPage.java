@@ -3,6 +3,7 @@ package javaProject.pages;
 import javaProject.accounts.users.UserHandler;
 import javaProject.external.table.ButtonColumn;
 import javaProject.methods.User;
+import javaProject.transactions.OneTimeTransaction;
 import javaProject.transactions.RegularTransaction;
 import javaProject.transactions.Transaction;
 
@@ -10,7 +11,6 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 
 public class EditTransactionsPage extends NormalPage {
 
@@ -93,6 +93,9 @@ public class EditTransactionsPage extends NormalPage {
 
         table.setPreferredSize(new Dimension(1920, 1080));
 
+        // Make the table sortable.
+        table.setAutoCreateRowSorter(true);
+
         // Add the table to the grid.
         JScrollPane scrollPane = new JScrollPane(table);
 
@@ -105,8 +108,7 @@ public class EditTransactionsPage extends NormalPage {
             }
         };
 
-        ButtonColumn buttonColumn = new ButtonColumn(table, delete, 4);
-        buttonColumn.setMnemonic(KeyEvent.VK_D);
+        new ButtonColumn(table, delete, 4);
 
         // Get the screen's size.
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -132,7 +134,7 @@ public class EditTransactionsPage extends NormalPage {
         // Add an action listener to the save button.
         saveButton.addActionListener(e -> {
             // Clear the transactions.
-            user.transactions.clear();
+            user.clearTransactions();
 
             // Iterate through all the rows in the table.
             for (int i = 0; i < table.getRowCount(); i++) {
@@ -153,20 +155,28 @@ public class EditTransactionsPage extends NormalPage {
                 // If the transaction is reoccurring, create a regular transaction.
                 if (table.getValueAt(i, 2).equals("Yes")) {
                     // Create the regular transaction.
-                    //RegularTransaction regularTransaction = new RegularTransaction(transactionName, transactionType, transactionAmount);
+                    RegularTransaction regularTransaction = new RegularTransaction(transactionName);
+
+                    // Set the amount.
+                    regularTransaction.setDaily(transactionAmount);
 
                     // Add the transaction to the user.
-                    //user.addTransaction(regularTransaction);
+                    user.addTransaction(regularTransaction);
 
                     // Continue to the next iteration.
-                    //continue;
+                    continue;
                 }
 
+                // Otherwise, this is a one-time transaction.
+
                 // Create the transaction.
-                //Transaction transaction = new Transaction(transactionName, transactionType, transactionAmount);
+                OneTimeTransaction transaction = new OneTimeTransaction(transactionName);
+
+                // Set the amount.
+                transaction.setAmount(transactionAmount);
 
                 // Add the transaction to the user.
-                //user.addTransaction(transaction);
+                user.addTransaction(transaction);
             }
         });
     }
